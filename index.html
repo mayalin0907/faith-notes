@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>May 的靈修筆記</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#b8860b;--gold-mid:#d4a017;--gold-light:#f0c040;
+  --gold-pale:#fef3c7;--gold-glow:#fffbeb;--cream:#fffdf7;--warm-white:#fff9f0;
+  --text:#3d2f00;--text-mid:#6b5700;--text-muted:#9c8040;--text-dim:#c4a96a;
+  --border:rgba(184,134,11,0.18);--border-mid:rgba(184,134,11,0.3);
+  --ot-color:#7c3d12;--ot-bg:#fff7ed;--ot-border:rgba(124,61,18,0.25);
+  --nt-color:#1e3a8a;--nt-bg:#eff6ff;--nt-border:rgba(30,58,138,0.2);
+  --complete-color:#166534;--complete-bg:#f0fdf4;--complete-border:rgba(22,101,52,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* ── Background warm glow ── */
+.bg-light{
+  position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 0%,rgba(255,210,50,0.18) 0%,transparent 70%),
+    linear-gradient(180deg,var(--gold-glow) 0%,var(--cream) 25%);
+}
+
+.app{position:relative;z-index:1;max-width:420px;margin:0 auto;min-height:100vh;padding-bottom:90px;}
+
+/* ── Header ── */
+.header{padding:26px 20px 18px;text-align:center;}
+.header-greeting{font-size:12px;color:var(--text-mid);letter-spacing:3px;margin-bottom:8px;font-weight:500;}
+.header-may{font-size:14px;font-weight:700;color:var(--text-muted);letter-spacing:4px;margin-bottom:4px;}
+.header-walk-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px;}
+.header-walk{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:400;color:var(--gold-mid);letter-spacing:14px;}
+.header-star{font-size:14px;color:var(--gold-mid);opacity:0.8;}
+.header-walk-sub{font-size:12px;color:var(--text-muted);letter-spacing:8px;margin-top:2px;font-weight:500;}
+.gold-line{width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold-mid),transparent);margin:10px auto 14px;}
+
+/* Baptism card */
+.baptism-card{
+  margin:0 20px 14px;
+  background:linear-gradient(135deg,rgba(255,243,199,0.9),rgba(255,251,235,0.95));
+  border:0.5px solid var(--border-mid);border-radius:16px;padding:13px 18px;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:0 2px 12px rgba(184,134,11,0.09);
+}
+.baptism-cross{font-size:22px;filter:drop-shadow(0 1px 4px rgba(184,134,11,0.3));}
+.baptism-info{flex:1;}
+.baptism-label{font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-bottom:2px;}
+.baptism-days{font-family:'Noto Sans TC',sans-serif;font-size:22px;font-weight:500;color:var(--gold);line-height:1.2;}
+.baptism-sub{font-size:10px;color:var(--text-dim);margin-top:1px;}
+
+/* ── Tabs ── */
+.tabs{display:flex;margin:0 20px;background:rgba(255,243,199,0.55);border-radius:12px;padding:3px;border:0.5px solid var(--border);}
+.tab-btn{flex:1;padding:8px 2px;background:none;border:none;color:var(--text-muted);font-size:11px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;border-radius:10px;transition:all 0.25s;}
+.tab-btn.active{background:white;color:var(--gold);font-weight:500;box-shadow:0 1px 6px rgba(184,134,11,0.12);}
+
+/* Search */
+.search-wrap{padding:12px 20px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:white;border:0.5px solid var(--border);border-radius:12px;padding:10px 14px;box-shadow:0 1px 8px rgba(184,134,11,0.06);}
+.search-box svg{opacity:0.35;flex-shrink:0;}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'Noto Sans TC',sans-serif;flex:1;}
+.search-box input::placeholder{color:var(--text-dim);}
+
+/* Content */
+.content{padding:14px 20px 0;}
+.month-label{font-size:11px;color:var(--gold);letter-spacing:2px;margin:14px 0 8px;font-weight:500;}
+
+/* Note card */
+.note-card{background:white;border:0.5px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 8px rgba(184,134,11,0.06);position:relative;overflow:hidden;}
+.note-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold-mid),var(--gold-light));opacity:0;transition:opacity 0.2s;}
+.note-card:hover{box-shadow:0 4px 16px rgba(184,134,11,0.13);transform:translateY(-1px);}
+.note-card:hover::before{opacity:1;}
+.note-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.note-date{font-size:11px;color:var(--text-dim);}
+.type-badge{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--gold-pale);color:var(--gold);border:0.5px solid var(--border-mid);}
+.type-badge.morning{background:#eff6ff;color:#3b82f6;border-color:rgba(59,130,246,0.25);}
+.note-title{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.5;}
+.note-quote{font-size:12px;color:var(--gold);border-left:2px solid var(--gold-light);padding-left:8px;margin-bottom:8px;line-height:1.6;}
+.note-footer{display:flex;align-items:center;justify-content:space-between;}
+.note-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.tag{font-size:10px;padding:2px 7px;background:var(--gold-glow);border:0.5px solid var(--border);border-radius:20px;color:var(--text-muted);}
+.like-display{font-size:16px;}
+
+/* FAB */
+.fab{position:fixed;bottom:28px;right:24px;width:54px;height:54px;background:linear-gradient(135deg,var(--gold-mid),var(--gold));border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(184,134,11,0.4),0 0 0 4px rgba(240,192,64,0.15);transition:transform 0.2s,box-shadow 0.2s;z-index:100;}
+.fab:hover{transform:scale(1.06);}
+.fab svg{color:white;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(61,47,0,0.38);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(3px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--warm-white);border:0.5px solid var(--border-mid);border-radius:24px 24px 0 0;padding:20px 20px 44px;width:100%;max-height:92vh;overflow-y:auto;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:36px;height:3px;background:var(--border-mid);border-radius:2px;margin:0 auto 18px;}
+.modal-title{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--text);margin-bottom:18px;text-align:center;letter-spacing:1px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:5px;display:block;font-weight:500;}
+.form-input,.form-textarea{width:100%;background:white;border:0.5px solid var(--border-mid);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Noto Sans TC',sans-serif;outline:none;resize:none;transition:border-color 0.2s;}
+.form-input:focus,.form-textarea:focus{border-color:var(--gold-mid);box-shadow:0 0 0 3px rgba(212,160,23,0.08);}
+.form-textarea{min-height:80px;line-height:1.7;}
+.two-col{display:flex;gap:8px;}.two-col .form-group{flex:1;}
+.type-row{display:flex;gap:6px;flex-wrap:wrap;}
+.type-pill{flex:1;min-width:60px;padding:7px 4px;border-radius:8px;border:0.5px solid var(--border-mid);background:white;color:var(--text-muted);font-size:12px;text-align:center;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.type-pill.selected{border-color:var(--gold-mid);color:var(--gold);background:var(--gold-pale);}
+.like-row{display:flex;gap:8px;}
+.like-pill{flex:1;padding:10px 4px;border-radius:10px;border:0.5px solid var(--border);background:white;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.like-pill .like-emoji{font-size:18px;display:block;margin-bottom:3px;}
+.like-pill .like-label{font-size:10px;color:var(--text-muted);}
+.like-pill.selected{border-color:var(--gold-mid);background:var(--gold-pale);}
+.like-pill.selected .like-label{color:var(--gold);}
+.upload-area{border:1.5px dashed var(--border-mid);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;background:white;position:relative;}
+.upload-area:hover{border-color:var(--gold-mid);background:var(--gold-glow);}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.upload-text{font-size:12px;color:var(--text-muted);}
+.upload-text span{color:var(--gold);}
+.upload-preview{font-size:11px;color:var(--gold);margin-top:4px;}
+#ai-result{background:var(--gold-glow);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:var(--text-mid);line-height:1.7;display:none;border:0.5px solid var(--border);}
+.ai-loading{display:none;align-items:center;gap:6px;font-size:12px;color:var(--gold-mid);margin-top:8px;}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold-mid);animation:pulse 1.2s infinite;}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+.save-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-mid),var(--gold));border:none;border-radius:12px;color:white;font-size:14px;font-weight:500;font-family:'Noto Sans TC',sans-serif;cursor:pointer;margin-top:6px;letter-spacing:1px;box-shadow:0 3px 14px rgba(184,134,11,0.3);transition:opacity 0.2s;}
+.save-btn:hover{opacity:0.92;}
+
+/* Detail */
+.detail-overlay{position:fixed;inset:0;background:var(--cream);z-index:300;display:none;overflow-y:auto;animation:fadeIn 0.2s ease;}
+.detail-overlay.open{display:block;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.detail-header{padding:20px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:0.5px solid var(--border);}
+.back-btn{background:none;border:none;cursor:pointer;color:var(--gold);padding:4px;}
+.detail-type-label{font-size:12px;color:var(--text-muted);}
+.detail-body{padding:20px;}
+.detail-date{font-size:12px;color:var(--text-dim);margin-bottom:3px;}
+.detail-title{font-family:'Noto Serif TC',serif;font-size:20px;color:var(--text);font-weight:400;line-height:1.5;margin-bottom:4px;}
+.detail-speaker{font-size:12px;color:var(--text-muted);margin-bottom:12px;}
+.detail-like{font-size:22px;margin-bottom:12px;}
+.detail-quote-box{background:linear-gradient(135deg,var(--gold-pale),var(--gold-glow));border:0.5px solid var(--border-mid);border-radius:14px;padding:14px 16px;margin-bottom:16px;}
+.detail-quote-label{font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:6px;}
+.detail-quote-text{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--text);line-height:1.9;}
+.detail-content-label{font-size:10px;color:var(--text-dim);letter-spacing:2px;margin-bottom:8px;}
+.detail-content{font-size:13px;color:var(--text-mid);line-height:2;white-space:pre-wrap;}
+.detail-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:16px;}
+.delete-btn{background:none;border:0.5px solid rgba(220,38,38,0.3);color:rgba(220,38,38,0.6);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:24px;font-family:'Noto Sans TC',sans-serif;}
+
+/* Empty */
+.empty{text-align:center;padding:48px 20px;color:var(--text-dim);}
+.empty-icon{font-size:36px;margin-bottom:12px;}
+.empty-text{font-size:13px;line-height:1.9;}
+
+/* Verse lib */
+.verse-lib{padding:14px 20px 0;}
+.verse-intro{font-size:12px;color:var(--text-muted);margin-bottom:14px;text-align:center;line-height:1.7;}
+.verse-card{background:white;border:0.5px solid var(--border-mid);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;box-shadow:0 1px 8px rgba(184,134,11,0.06);transition:all 0.2s;position:relative;overflow:hidden;}
+.verse-card::before{content:'✦';position:absolute;right:14px;top:12px;color:var(--gold-light);font-size:18px;}
+.verse-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(184,134,11,0.12);}
+.verse-text{font-family:'Noto Serif TC',serif;font-size:15px;color:var(--text);line-height:1.9;margin-bottom:8px;}
+.verse-from{font-size:11px;color:var(--text-muted);}
+
+/* Tag cloud */
+.tag-cloud{padding:14px 20px 0;}
+.tag-cloud-title{font-size:11px;color:var(--text-muted);letter-spacing:2px;margin-bottom:12px;}
+.tag-cloud-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+.tag-cloud-item{padding:6px 14px;border-radius:20px;border:0.5px solid var(--border);background:white;color:var(--text-muted);font-size:13px;cursor:pointer;transition:all 0.2s;}
+.tag-cloud-item:hover,.tag-cloud-item.active{border-color:var(--gold-mid);color:var(--gold);background:var(--gold-pale);}
+
+/* ── Reading tab ── */
+.reading-tab{padding:14px 20px 0;}
+.reading-summary{display:flex;gap:10px;margin-bottom:14px;}
+.r-stat{flex:1;background:white;border:0.5px solid var(--border);border-radius:14px;padding:12px 10px;text-align:center;box-shadow:0 1px 6px rgba(184,134,11,0.06);}
+.r-stat.nt{border-color:var(--nt-border);background:var(--nt-bg);}
+.r-stat.ot{border-color:var(--ot-border);background:var(--ot-bg);}
+.r-stat-label{font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-bottom:4px;}
+.r-stat-num{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:500;}
+.r-stat.nt .r-stat-num{color:var(--nt-color);}
+.r-stat.ot .r-stat-num{color:var(--ot-color);}
+.r-stat-sub{font-size:10px;color:var(--text-dim);margin-top:2px;}
+
+.book-section-title{font-size:11px;color:var(--text-muted);letter-spacing:2px;margin:14px 0 8px;}
+
+/* Book progress card */
+.book-card{background:white;border:0.5px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(184,134,11,0.05);}
+.book-card.complete{border-color:var(--complete-border);background:var(--complete-bg);}
+.book-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.book-name{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;color:var(--text);}
+.book-badge{font-size:10px;padding:2px 8px;border-radius:20px;}
+.book-badge.NT{background:var(--nt-bg);color:var(--nt-color);border:0.5px solid var(--nt-border);}
+.book-badge.OT{background:var(--ot-bg);color:var(--ot-color);border:0.5px solid var(--ot-border);}
+.book-badge.done{background:var(--complete-bg);color:var(--complete-color);border:0.5px solid var(--complete-border);}
+.book-progress-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.progress-bar-wrap{flex:1;height:5px;background:rgba(184,134,11,0.1);border-radius:3px;overflow:hidden;}
+.progress-bar{height:100%;border-radius:3px;transition:width 0.4s ease;}
+.progress-bar.NT{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
+.progress-bar.OT{background:linear-gradient(90deg,#b45309,#d97706);}
+.progress-bar.done{background:linear-gradient(90deg,#16a34a,#4ade80);}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap;}
+.complete-times{font-size:11px;color:var(--complete-color);font-weight:500;}
+.book-chapters-read{font-size:11px;color:var(--text-dim);}
+
+/* Reading modal */
+.testament-row{display:flex;gap:8px;margin-bottom:14px;}
+.testament-pill{flex:1;padding:9px;border-radius:10px;border:0.5px solid var(--border-mid);background:white;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.testament-pill .t-label{font-size:13px;color:var(--text-muted);display:block;}
+.testament-pill .t-sub{font-size:10px;color:var(--text-dim);}
+.testament-pill.NT.selected{border-color:var(--nt-color);background:var(--nt-bg);}
+.testament-pill.NT.selected .t-label{color:var(--nt-color);font-weight:500;}
+.testament-pill.OT.selected{border-color:var(--ot-color);background:var(--ot-bg);}
+.testament-pill.OT.selected .t-label{color:var(--ot-color);font-weight:500;}
+.book-select-wrap{position:relative;}
+.book-select-wrap select{width:100%;background:white;border:0.5px solid var(--border-mid);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Noto Sans TC',sans-serif;outline:none;appearance:none;}
+.chapter-row{display:flex;gap:8px;align-items:flex-end;}
+.chapter-row .form-group{flex:1;}
+.chapter-info{font-size:11px;color:var(--text-muted);margin-top:5px;}
+
+/* Full rounds */
+.full-rounds-card{background:linear-gradient(135deg,var(--complete-bg),#f0fdf4);border:0.5px solid var(--complete-border);border-radius:14px;padding:14px 16px;margin-bottom:12px;}
+.full-round-row{display:flex;align-items:center;gap:10px;padding:4px 0;}
+.full-round-icon{font-size:18px;}
+.full-round-text{font-size:13px;color:var(--complete-color);line-height:1.5;}
+.full-round-text strong{font-weight:700;}
+
+/* Init section */
+.init-section{background:white;border:0.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(184,134,11,0.05);}
+.init-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.init-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.6;}
+.init-row{display:flex;gap:10px;}
+.init-card{flex:1;border:0.5px solid var(--border-mid);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--gold-glow);}
+.init-card:hover{background:var(--gold-pale);border-color:var(--gold-mid);transform:translateY(-1px);}
+.init-card-icon{font-size:22px;margin-bottom:6px;}
+.init-card-label{font-size:11px;color:var(--text-mid);line-height:1.5;}
+
+/* Init modal */
+.init-modal-date{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.init-modal-date label{font-size:11px;color:var(--gold);white-space:nowrap;font-weight:500;}
+
+/* Toast */
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--gold-pale);font-size:13px;padding:10px 20px;border-radius:20px;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;}
+
+/* Completion celebration */
+.celebration{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(61,47,0,0.5);backdrop-filter:blur(4px);display:none;}
+.celebration.show{display:flex;}
+.celebration-box{background:white;border-radius:24px;padding:32px 28px;text-align:center;max-width:300px;box-shadow:0 20px 60px rgba(184,134,11,0.3);}
+.celebration-emoji{font-size:48px;margin-bottom:12px;}
+.celebration-title{font-family:'Ma Shan Zheng',cursive;font-size:22px;color:var(--gold-mid);margin-bottom:8px;letter-spacing:2px;}
+.celebration-text{font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;}
+.celebration-btn{background:linear-gradient(135deg,var(--gold-mid),var(--gold));border:none;border-radius:12px;padding:11px 28px;color:white;font-size:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
+</style>
+
+<!-- Bible data -->
+<script>
+const BIBLE = {
+  NT: [
+    {name:'馬太福音',chapters:28},{name:'馬可福音',chapters:16},{name:'路加福音',chapters:24},
+    {name:'約翰福音',chapters:21},{name:'使徒行傳',chapters:28},{name:'羅馬書',chapters:16},
+    {name:'哥林多前書',chapters:16},{name:'哥林多後書',chapters:13},{name:'加拉太書',chapters:6},
+    {name:'以弗所書',chapters:6},{name:'腓立比書',chapters:4},{name:'歌羅西書',chapters:4},
+    {name:'帖撒羅尼迦前書',chapters:5},{name:'帖撒羅尼迦後書',chapters:3},{name:'提摩太前書',chapters:6},
+    {name:'提摩太後書',chapters:4},{name:'提多書',chapters:3},{name:'腓利門書',chapters:1},
+    {name:'希伯來書',chapters:13},{name:'雅各書',chapters:5},{name:'彼得前書',chapters:5},
+    {name:'彼得後書',chapters:3},{name:'約翰一書',chapters:5},{name:'約翰二書',chapters:1},
+    {name:'約翰三書',chapters:1},{name:'猶大書',chapters:1},{name:'啟示錄',chapters:22}
+  ],
+  OT: [
+    {name:'創世記',chapters:50},{name:'出埃及記',chapters:40},{name:'利未記',chapters:27},
+    {name:'民數記',chapters:36},{name:'申命記',chapters:34},{name:'約書亞記',chapters:24},
+    {name:'士師記',chapters:21},{name:'路得記',chapters:4},{name:'撒母耳記上',chapters:31},
+    {name:'撒母耳記下',chapters:24},{name:'列王紀上',chapters:22},{name:'列王紀下',chapters:25},
+    {name:'歷代志上',chapters:29},{name:'歷代志下',chapters:36},{name:'以斯拉記',chapters:10},
+    {name:'尼希米記',chapters:13},{name:'以斯帖記',chapters:10},{name:'約伯記',chapters:42},
+    {name:'詩篇',chapters:150},{name:'箴言',chapters:31},{name:'傳道書',chapters:12},
+    {name:'雅歌',chapters:8},{name:'以賽亞書',chapters:66},{name:'耶利米書',chapters:52},
+    {name:'耶利米哀歌',chapters:5},{name:'以西結書',chapters:48},{name:'但以理書',chapters:12},
+    {name:'何西阿書',chapters:14},{name:'約珥書',chapters:3},{name:'阿摩司書',chapters:9},
+    {name:'俄巴底亞書',chapters:1},{name:'約拿書',chapters:4},{name:'彌迦書',chapters:7},
+    {name:'那鴻書',chapters:3},{name:'哈巴谷書',chapters:3},{name:'西番雅書',chapters:3},
+    {name:'哈該書',chapters:2},{name:'撒迦利亞書',chapters:14},{name:'瑪拉基書',chapters:4}
+  ]
+};
+</script>
+
+<div class="bg-light"></div>
+
+<div class="app">
+  <div class="header">
+    <div class="header-greeting">願恩惠與平安歸於妳</div>
+    <div class="header-may">May 的</div>
+    <div class="header-walk-row">
+      <span class="header-star">✦</span>
+      <span class="header-walk">與神同行</span>
+      <span class="header-star" style="margin-left:-14px">✦</span>
+    </div>
+    <div class="header-walk-sub">靈 修 筆 記</div>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="baptism-card">
+    <div class="baptism-cross">✝</div>
+    <div class="baptism-info">
+      <div class="baptism-label">受洗至今</div>
+      <div class="baptism-days" id="baptism-days">—</div>
+      <div class="baptism-sub">2024 年 8 月 11 日 受洗</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('notes')">筆記</button>
+    <button class="tab-btn" onclick="switchTab('verses')">金句</button>
+    <button class="tab-btn" onclick="switchTab('tags')">標籤</button>
+    <button class="tab-btn" onclick="switchTab('reading')">讀經</button>
+  </div>
+
+  <div class="search-wrap" id="search-wrap">
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="搜尋關鍵字、標籤、講道者…" oninput="renderNotes()">
+    </div>
+  </div>
+
+  <div id="tab-notes" class="content"></div>
+  <div id="tab-verses" class="verse-lib" style="display:none"></div>
+  <div id="tab-reading" class="reading-tab" style="display:none"></div>
+  <div id="tab-tags" class="tag-cloud" style="display:none"></div>
+</div>
+
+<button class="fab" id="fab-btn" onclick="openAddModal()" aria-label="新增">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
+<!-- Note Modal -->
+<div class="modal-overlay" id="note-modal" onclick="handleOverlayClick(event,'note-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✝ 新增靈修筆記</div>
+    <div class="form-group">
+      <label class="form-label">類型</label>
+      <div class="type-row">
+        <div class="type-pill selected" onclick="selectType(this,'主日講道')">主日講道</div>
+        <div class="type-pill" onclick="selectType(this,'晨禱')">晨禱</div>
+        <div class="type-pill" onclick="selectType(this,'靈修')">靈修</div>
+        <div class="type-pill" onclick="selectType(this,'其他')">其他</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="form-group"><label class="form-label">日期</label><input type="date" class="form-input" id="f-date"></div>
+      <div class="form-group"><label class="form-label">講道者</label><input type="text" class="form-input" id="f-speaker" placeholder="例：淑華師母"></div>
+    </div>
+    <div class="form-group"><label class="form-label">主題 / 講道題目</label><input type="text" class="form-input" id="f-title" placeholder="例：一個改變世代的母親"></div>
+    <div class="form-group">
+      <label class="form-label">我的喜好程度</label>
+      <div class="like-row">
+        <div class="like-pill" onclick="selectLike(this,'❤️')"><span class="like-emoji">❤️</span><span class="like-label">非常喜歡</span></div>
+        <div class="like-pill" onclick="selectLike(this,'🙂')"><span class="like-emoji">🙂</span><span class="like-label">還好普普</span></div>
+        <div class="like-pill" onclick="selectLike(this,'😐')"><span class="like-emoji">😐</span><span class="like-label">沒感動</span></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">上傳 PPT 照片（AI 幫你轉成文字）</label>
+      <div class="upload-area">
+        <input type="file" accept="image/*" id="f-image" onchange="handleImageUpload(this)">
+        <div class="upload-text">📷 點擊上傳照片 <span>→ AI 自動辨識文字</span></div>
+        <div class="upload-preview" id="upload-preview"></div>
+      </div>
+      <div class="ai-loading" id="ai-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>AI 辨識中…</span></div>
+      <div id="ai-result"></div>
+    </div>
+    <div class="form-group"><label class="form-label">筆記內容（完整記錄）</label><textarea class="form-textarea" id="f-content" placeholder="貼上或輸入你的筆記內容…" rows="5"></textarea></div>
+    <div class="form-group"><label class="form-label">✨ 今天最亮的一句金句</label><input type="text" class="form-input" id="f-quote" placeholder="選一句最打中你的話"></div>
+    <div class="form-group"><label class="form-label">標籤（空格分隔，不用加 #）</label><input type="text" class="form-input" id="f-tags" placeholder="例：信心 放手 母親 約基別"></div>
+    <button class="save-btn" onclick="saveNote()">✦ 儲存筆記</button>
+  </div>
+</div>
+
+<!-- Reading Modal -->
+<div class="modal-overlay" id="reading-modal" onclick="handleOverlayClick(event,'reading-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📖 記錄讀經進度</div>
+    <div class="form-group">
+      <label class="form-label">約書</label>
+      <div class="testament-row">
+        <div class="testament-pill NT selected" onclick="selectTestament(this,'NT')"><span class="t-label">新約</span><span class="t-sub">27卷</span></div>
+        <div class="testament-pill OT" onclick="selectTestament(this,'OT')"><span class="t-label">舊約</span><span class="t-sub">39卷</span></div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="form-group"><label class="form-label">日期</label><input type="date" class="form-input" id="r-date"></div>
+      <div class="form-group">
+        <label class="form-label">選擇卷名</label>
+        <div class="book-select-wrap"><select class="form-input" id="r-book" onchange="updateChapterInfo()"></select></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">今天讀的章節</label>
+      <div class="chapter-row">
+        <div class="form-group"><label class="form-label" style="font-size:10px">從第幾章</label><input type="number" class="form-input" id="r-from" placeholder="1" min="1" oninput="updateChapterInfo()"></div>
+        <div class="form-group"><label class="form-label" style="font-size:10px">到第幾章</label><input type="number" class="form-input" id="r-to" placeholder="3" min="1" oninput="updateChapterInfo()"></div>
+      </div>
+      <div class="chapter-info" id="chapter-info"></div>
+    </div>
+    <div class="form-group"><label class="form-label">心得 / 亮光（選填）</label><textarea class="form-textarea" id="r-note" placeholder="今天讀到了什麼讓你有感的話？" rows="3"></textarea></div>
+    <button class="save-btn" onclick="saveReading()">✦ 儲存讀經記錄</button>
+  </div>
+</div>
+
+<!-- Init Modal -->
+<div class="modal-overlay" id="init-modal" onclick="handleOverlayClick(event,'init-modal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="init-modal-title">登記全卷完成</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.8;" id="init-modal-desc"></div>
+    <div class="form-group">
+      <label class="form-label">完成日期</label>
+      <input type="date" class="form-input" id="init-date">
+    </div>
+    <div style="background:var(--gold-glow);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--text-muted);line-height:1.7;">
+      登記後，所有卷書都會標記為「完成 1 次」，進度條全滿，並顯示慶祝畫面。之後繼續用 ＋ 按鈕記錄第二次的進度。
+    </div>
+    <button class="save-btn" id="init-confirm-btn" onclick="confirmInit()">✦ 確認登記完成</button>
+  </div>
+</div>
+
+<!-- Detail View -->
+<div class="detail-overlay" id="detail-overlay">
+  <div class="detail-header">
+    <button class="back-btn" onclick="closeDetail()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button>
+    <span class="detail-type-label" id="detail-type-label"></span>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</div>
+
+<!-- Celebration -->
+<div class="celebration" id="celebration">
+  <div class="celebration-box">
+    <div class="celebration-emoji">🎉</div>
+    <div class="celebration-title" id="cel-title">恭喜完成！</div>
+    <div class="celebration-text" id="cel-text"></div>
+    <button class="celebration-btn" onclick="closeCelebration()">感謝神！</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const NOTE_KEY='faith_notes_v3';
+const READ_KEY='faith_reading_v2';
+const PROG_KEY='faith_progress_v1';
+let notes=[], readings=[], bookProgress={};
+let currentType='主日講道', currentLike='', currentTestament='NT';
+let selectedTag=null, currentTab='notes';
+
+// Baptism counter
+(function(){
+  const b=new Date('2024-08-11'), now=new Date();
+  const diff=Math.floor((now-b)/(864e5));
+  const y=Math.floor(diff/365), d=diff%365;
+  document.getElementById('baptism-days').textContent=y>0?`${y} 年 ${d} 天`:`${diff} 天`;
+})();
+
+function init(){
+  try{const r=localStorage.getItem(NOTE_KEY);notes=r?JSON.parse(r):[];}catch(e){notes=[];}
+  try{const r=localStorage.getItem(READ_KEY);readings=r?JSON.parse(r):[];}catch(e){readings=[];}
+  try{const r=localStorage.getItem(PROG_KEY);bookProgress=r?JSON.parse(r):{};}catch(e){bookProgress={};}
+  renderAll();
+}
+
+function saveNotes(){try{localStorage.setItem(NOTE_KEY,JSON.stringify(notes));}catch(e){}}
+function saveReadings(){try{localStorage.setItem(READ_KEY,JSON.stringify(readings));}catch(e){}}
+function saveProgress(){try{localStorage.setItem(PROG_KEY,JSON.stringify(bookProgress));}catch(e){}}
+
+function renderAll(){renderNotes();renderVerses();renderTags();renderReading();}
+
+function switchTab(tab){
+  currentTab=tab;
+  ['notes','verses','tags','reading'].forEach((t,i)=>{
+    document.querySelectorAll('.tab-btn')[i].classList.toggle('active',t===tab);
+    document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
+  });
+  document.getElementById('search-wrap').style.display=tab==='notes'?'block':'none';
+}
+
+// ── Notes ──
+function renderNotes(){
+  const q=document.getElementById('search-input').value.toLowerCase();
+  let filtered=notes.filter(n=>{
+    const text=(n.title+n.content+n.quote+(n.tags||[]).join(' ')+(n.speaker||'')).toLowerCase();
+    return(!q||text.includes(q))&&(!selectedTag||(n.tags||[]).includes(selectedTag));
+  });
+  const el=document.getElementById('tab-notes');
+  if(!filtered.length){el.innerHTML=`<div class="empty"><div class="empty-icon">✦</div><div class="empty-text">${q||selectedTag?'找不到相關筆記':'還沒有筆記<br>點右下方 ＋ 開始記錄'}</div></div>`;return;}
+  const groups={};
+  filtered.forEach(n=>{const m=(n.date||'').slice(0,7)||'未知';if(!groups[m])groups[m]=[];groups[m].push(n);});
+  let html='';
+  Object.keys(groups).sort().reverse().forEach(m=>{
+    const[y,mo]=m.split('-');
+    html+=`<div class="month-label">${y?y+'年'+parseInt(mo)+'月':'未分類'}</div>`;
+    groups[m].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).forEach(n=>{
+      const tc=n.type==='晨禱'?'morning':'';
+      const tagsHtml=(n.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
+      html+=`<div class="note-card" onclick="openDetail('${n.id}')">
+        <div class="note-meta"><span class="note-date">${fmtDate(n.date)}${n.speaker?'　'+n.speaker:''}</span><span class="type-badge ${tc}">${n.type||''}</span></div>
+        <div class="note-title">${n.title||'無標題'}</div>
+        ${n.quote?`<div class="note-quote">「${n.quote}」</div>`:''}
+        <div class="note-footer"><div class="note-tags">${tagsHtml}</div>${n.like?`<div class="like-display">${n.like}</div>`:''}</div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+function renderVerses(){
+  const el=document.getElementById('tab-verses');
+  const wq=notes.filter(n=>n.quote);
+  if(!wq.length){el.innerHTML=`<div class="verse-intro">還沒有金句<br>新增筆記時標記最亮的一句話</div>`;return;}
+  let html=`<div class="verse-intro">共 ${wq.length} 句亮光字句</div>`;
+  wq.sort((a,b)=>(b.date||'').localeCompare(a.date||'')).forEach(n=>{
+    const tagsHtml=(n.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
+    html+=`<div class="verse-card" onclick="openDetail('${n.id}')">
+      <div class="verse-text">「${n.quote}」</div>
+      <div class="verse-from">${fmtDate(n.date)}${n.speaker?'　'+n.speaker:''}${n.title?'　'+n.title:''}</div>
+      <div class="note-tags" style="margin-top:8px">${tagsHtml}</div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+function renderTags(){
+  const el=document.getElementById('tab-tags');
+  const tc={};notes.forEach(n=>(n.tags||[]).forEach(t=>{tc[t]=(tc[t]||0)+1;}));
+  const tags=Object.entries(tc).sort((a,b)=>b[1]-a[1]);
+  if(!tags.length){el.innerHTML=`<div class="empty"><div class="empty-text">新增筆記時加上標籤<br>就能在這裡依主題瀏覽</div></div>`;return;}
+  el.innerHTML=`<div class="tag-cloud-title">所有標籤</div><div class="tag-cloud-wrap">${tags.map(([t,c])=>`<div class="tag-cloud-item ${selectedTag===t?'active':''}" onclick="filterByTag('${t}')">#${t} <span style="opacity:0.5;font-size:11px">${c}</span></div>`).join('')}</div>`;
+}
+
+// ── Reading ──
+function getBookProgress(testament, bookName){
+  const key=`${testament}:${bookName}`;
+  return bookProgress[key]||{readChapters:new Set(),completedTimes:0,completedDates:[]};
+}
+
+function renderReading(){
+  const el=document.getElementById('tab-reading');
+
+  // Count complete times
+  let ntComplete=0, otComplete=0;
+  Object.entries(bookProgress).forEach(([k,v])=>{
+    if(k.startsWith('NT:')) ntComplete+=v.completedTimes||0;
+    if(k.startsWith('OT:')) otComplete+=v.completedTimes||0;
+  });
+
+  // NT全卷完成次數（全部卷都至少完成N次才算）
+  const ntCounts=BIBLE.NT.map(function(b){var p=bookProgress["NT:"+b.name];return p?p.completedTimes||0:0;});
+  const otCounts=BIBLE.OT.map(function(b){var p=bookProgress["OT:"+b.name];return p?p.completedTimes||0:0;});
+  const ntFullRounds=ntCounts.every(c=>c>0)?ntCounts.reduce((a,b)=>Math.min(a,b),Infinity):0;
+  const otFullRounds=otCounts.every(c=>c>0)?otCounts.reduce((a,b)=>Math.min(a,b),Infinity):0;
+
+  let html=`<div class="reading-summary">
+    <div class="r-stat nt"><div class="r-stat-label">新約完成</div><div class="r-stat-num">${ntComplete}</div><div class="r-stat-sub">卷次累計</div></div>
+    <div class="r-stat ot"><div class="r-stat-label">舊約完成</div><div class="r-stat-num">${otComplete}</div><div class="r-stat-sub">卷次累計</div></div>
+  </div>`;
+
+  // 全卷完成紀錄
+  if(ntFullRounds>0||otFullRounds>0){
+    html+=`<div class="full-rounds-card">`;
+    if(ntFullRounds>0) html+=`<div class="full-round-row"><span class="full-round-icon">🎉</span><span class="full-round-text">新約全卷完整讀完 <strong>${ntFullRounds}</strong> 次</span></div>`;
+    if(otFullRounds>0) html+=`<div class="full-round-row"><span class="full-round-icon">🎉</span><span class="full-round-text">舊約全卷完整讀完 <strong>${otFullRounds}</strong> 次</span></div>`;
+    html+=`</div>`;
+  }
+
+  // 初始化按鈕區
+  html+=`<div class="init-section">
+    <div class="init-title">快速建立完成記錄</div>
+    <div class="init-desc">如果你已經讀完整卷，可以直接登記完成，不用一章一章輸入。</div>
+    <div class="init-row">
+      <div class="init-card" onclick="openInitModal('NT')">
+        <div class="init-card-icon">📖</div>
+        <div class="init-card-label">登記新約<br>全卷完成</div>
+      </div>
+      <div class="init-card" onclick="openInitModal('OT')">
+        <div class="init-card-icon">📜</div>
+        <div class="init-card-label">登記舊約<br>全卷完成</div>
+      </div>
+    </div>
+  </div>`;
+
+  // NT books
+  const ntBooks=BIBLE.NT.filter(b=>{
+    const p=bookProgress[`NT:${b.name}`];
+    return p&&(p.completedTimes>0||(p.readChapters&&p.readChapters.length>0));
+  });
+  const otBooks=BIBLE.OT.filter(b=>{
+    const p=bookProgress[`OT:${b.name}`];
+    return p&&(p.completedTimes>0||(p.readChapters&&p.readChapters.length>0));
+  });
+
+  if(ntBooks.length){
+    html+=`<div class="book-section-title">新約各卷</div>`;
+    html+=ntBooks.map(b=>renderBookCard('NT',b)).join('');
+  }
+  if(otBooks.length){
+    html+=`<div class="book-section-title">舊約各卷</div>`;
+    html+=otBooks.map(b=>renderBookCard('OT',b)).join('');
+  }
+
+  if(!ntBooks.length&&!otBooks.length){
+    html+=`<div class="empty" style="padding-top:16px"><div class="empty-icon">📖</div><div class="empty-text">還沒有讀經記錄<br>點右下方 ＋ 逐章記錄<br>或用上方按鈕快速登記完成</div></div>`;
+  }
+
+  el.innerHTML=html;
+}
+
+function renderBookCard(testament, bookDef){
+  const key=`${testament}:${bookDef.name}`;
+  const p=bookProgress[key]||{readChapters:[],completedTimes:0};
+  const readSet=new Set(p.readChapters||[]);
+  const total=bookDef.chapters;
+  const read=readSet.size;
+  const pct=Math.round(read/total*100);
+  const isDone=p.completedTimes>0;
+  const currentPct=isDone?100:pct;
+  const barClass=isDone?'done':testament;
+
+  return `<div class="book-card ${isDone?'complete':''}">
+    <div class="book-card-header">
+      <span class="book-name">${bookDef.name}</span>
+      ${isDone
+        ?`<span class="book-badge done">✓ 完成 ${p.completedTimes} 次</span>`
+        :`<span class="book-badge ${testament}">${testament==='NT'?'新約':'舊約'}</span>`}
+    </div>
+    <div class="book-progress-row">
+      <div class="progress-bar-wrap"><div class="progress-bar ${barClass}" style="width:${currentPct}%"></div></div>
+      <span class="progress-text">${isDone?'100':''+pct}%</span>
+    </div>
+    <div class="book-chapters-read">${isDone?`全 ${total} 章已完成`:`已讀 ${read} / ${total} 章`}${p.completedTimes>1?'　（已完整讀過 '+p.completedTimes+' 次）':''}</div>
+  </div>`;
+}
+
+// ── FAB ──
+function openAddModal(){
+  if(currentTab==='reading') openReadingModal();
+  else openNoteModal();
+}
+
+function openNoteModal(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('f-date').value=today;
+  ['f-title','f-speaker','f-content','f-quote','f-tags'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('upload-preview').textContent='';
+  document.getElementById('ai-result').style.display='none';
+  document.getElementById('ai-loading').style.display='none';
+  document.querySelectorAll('#note-modal .type-pill').forEach((p,i)=>p.classList.toggle('selected',i===0));
+  document.querySelectorAll('.like-pill').forEach(p=>p.classList.remove('selected'));
+  currentType='主日講道'; currentLike='';
+  document.getElementById('note-modal').classList.add('open');
+}
+
+function openReadingModal(){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('r-date').value=today;
+  document.getElementById('r-from').value='';
+  document.getElementById('r-to').value='';
+  document.getElementById('r-note').value='';
+  document.getElementById('chapter-info').textContent='';
+  currentTestament='NT';
+  document.querySelectorAll('.testament-pill').forEach(p=>p.classList.remove('selected'));
+  document.querySelector('.testament-pill.NT').classList.add('selected');
+  populateBookSelect('NT');
+  document.getElementById('reading-modal').classList.add('open');
+}
+
+function populateBookSelect(testament){
+  const sel=document.getElementById('r-book');
+  sel.innerHTML=BIBLE[testament].map(b=>`<option value="${b.name}">${b.name}</option>`).join('');
+  updateChapterInfo();
+}
+
+function updateChapterInfo(){
+  const bookName=document.getElementById('r-book').value;
+  const from=parseInt(document.getElementById('r-from').value)||0;
+  const to=parseInt(document.getElementById('r-to').value)||0;
+  const bookDef=BIBLE[currentTestament].find(b=>b.name===bookName);
+  if(!bookDef){document.getElementById('chapter-info').textContent='';return;}
+  const key=`${currentTestament}:${bookName}`;
+  const p=bookProgress[key]||{readChapters:[]};
+  const readSet=new Set(p.readChapters||[]);
+  let info=`${bookName} 共 ${bookDef.chapters} 章，已讀 ${readSet.size} 章`;
+  if(from&&to&&to>=from){
+    let newCount=0;
+    for(let i=from;i<=to;i++) if(!readSet.has(i)) newCount++;
+    if(newCount>0) info+=`，這次新增 ${newCount} 章`;
+    const totalAfter=new Set([...readSet,...Array.from({length:to-from+1},(_,i)=>from+i)]);
+    if(totalAfter.size>=bookDef.chapters) info+=` → 🎉 即將完成整卷！`;
+  }
+  document.getElementById('chapter-info').textContent=info;
+}
+
+function handleOverlayClick(e,id){if(e.target===document.getElementById(id))document.getElementById(id).classList.remove('open');}
+
+function selectType(el,type){document.querySelectorAll('#note-modal .type-pill').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');currentType=type;}
+function selectLike(el,like){document.querySelectorAll('.like-pill').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');currentLike=like;}
+function selectTestament(el,t){
+  document.querySelectorAll('.testament-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');currentTestament=t;
+  populateBookSelect(t);
+}
+
+async function handleImageUpload(input){
+  const file=input.files[0];if(!file)return;
+  document.getElementById('upload-preview').textContent=`已選擇：${file.name}`;
+  document.getElementById('ai-loading').style.display='flex';
+  document.getElementById('ai-result').style.display='none';
+  try{
+    const base64=await toBase64(file);
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:file.type||'image/jpeg',data:base64}},{type:'text',text:'這是教會講道的PPT投影片截圖。請把圖片裡所有的文字完整擷取出來，直接輸出文字內容，不需要任何說明或格式標記。'}]}]})});
+    const data=await resp.json();
+    const text=data.content.map(i=>i.text||'').join('');
+    document.getElementById('ai-loading').style.display='none';
+    document.getElementById('ai-result').textContent=text;
+    document.getElementById('ai-result').style.display='block';
+    if(!document.getElementById('f-content').value) document.getElementById('f-content').value=text;
+  }catch(e){document.getElementById('ai-loading').style.display='none';showToast('辨識失敗，請手動輸入');}
+}
+
+function toBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});}
+
+let initTestament='NT';
+function openInitModal(testament){
+  initTestament=testament;
+  const label=testament==='NT'?'新約（27卷）':'舊約（39卷）';
+  document.getElementById('init-modal-title').textContent=`登記${label}全卷完成`;
+  document.getElementById('init-modal-desc').textContent=
+    `May，恭喜你即將完成${label}的閱讀！\n請選擇你完成的日期，系統會幫你把全部${testament==='NT'?27:39}卷都標記完成。`;
+  document.getElementById('init-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('init-modal').classList.add('open');
+}
+
+function confirmInit(){
+  const date=document.getElementById('init-date').value;
+  const books=BIBLE[initTestament];
+  books.forEach(b=>{
+    const key=`${initTestament}:${b.name}`;
+    if(!bookProgress[key]) bookProgress[key]={readChapters:[],completedTimes:0,completedDates:[]};
+    const p=bookProgress[key];
+    p.completedTimes=(p.completedTimes||0)+1;
+    p.completedDates=p.completedDates||[];
+    p.completedDates.push(date);
+    p.readChapters=[];
+  });
+  saveProgress();
+  document.getElementById('init-modal').classList.remove('open');
+  renderReading();
+  const label=initTestament==='NT'?'新約':'舊約';
+  document.getElementById('cel-title').textContent=`🎉 ${label}全卷完成！`;
+  document.getElementById('cel-text').textContent=`May，你完整讀完了整本${label}！\n這是一個美麗的里程碑，神看見你每一天的心。`;
+  document.getElementById('celebration').classList.add('show');
+}
+
+
+function saveNote(){
+  const title=document.getElementById('f-title').value.trim();
+  const content=document.getElementById('f-content').value.trim();
+  if(!title&&!content){showToast('請至少填寫主題或內容');return;}
+  const note={id:Date.now().toString(),type:currentType,like:currentLike,date:document.getElementById('f-date').value,speaker:document.getElementById('f-speaker').value.trim(),title,content,quote:document.getElementById('f-quote').value.trim(),tags:document.getElementById('f-tags').value.trim().split(/\s+/).filter(Boolean),createdAt:new Date().toISOString()};
+  notes.unshift(note);saveNotes();
+  document.getElementById('note-modal').classList.remove('open');
+  renderAll();showToast('✦ 筆記已儲存');
+}
+
+function saveReading(){
+  const bookName=document.getElementById('r-book').value;
+  const from=parseInt(document.getElementById('r-from').value);
+  const to=parseInt(document.getElementById('r-to').value)||from;
+  if(!bookName||!from){showToast('請選擇卷名和章節');return;}
+  if(from>to){showToast('起始章不能大於結束章');return;}
+
+  const bookDef=BIBLE[currentTestament].find(b=>b.name===bookName);
+  if(!bookDef){showToast('找不到這卷書');return;}
+  if(to>bookDef.chapters){showToast(`${bookName} 只有 ${bookDef.chapters} 章`);return;}
+
+  const key=`${currentTestament}:${bookName}`;
+  if(!bookProgress[key]) bookProgress[key]={readChapters:[],completedTimes:0,completedDates:[]};
+  const p=bookProgress[key];
+  const readSet=new Set(p.readChapters||[]);
+  for(let i=from;i<=to;i++) readSet.add(i);
+  p.readChapters=Array.from(readSet);
+
+  let justCompleted=false;
+  if(readSet.size>=bookDef.chapters){
+    p.completedTimes=(p.completedTimes||0)+1;
+    p.completedDates.push(new Date().toISOString().slice(0,10));
+    p.readChapters=[];
+    justCompleted=true;
+  }
+
+  // Save reading log
+  const rec={id:Date.now().toString(),testament:currentTestament,date:document.getElementById('r-date').value,book:bookName,from,to,note:document.getElementById('r-note').value.trim(),createdAt:new Date().toISOString()};
+  readings.unshift(rec);
+  saveReadings();
+  saveProgress();
+
+  document.getElementById('reading-modal').classList.remove('open');
+  renderReading();
+
+  if(justCompleted){
+    showCelebration(bookName, p.completedTimes);
+  } else {
+    showToast('📖 讀經記錄已儲存');
+  }
+}
+
+function showCelebration(bookName, times){
+  document.getElementById('cel-title').textContent=`🎉 ${bookName} 讀完了！`;
+  document.getElementById('cel-text').textContent=`May，你已經完整讀完《${bookName}》${times > 1 ? `第 ${times} 次` : '一整卷'}了！\n繼續保持，神看見你的心！`;
+  document.getElementById('celebration').classList.add('show');
+}
+
+function closeCelebration(){document.getElementById('celebration').classList.remove('show');}
+
+function openDetail(id){
+  const n=notes.find(x=>x.id===id);if(!n)return;
+  document.getElementById('detail-type-label').textContent=`${n.type||''}　${n.date||''}`;
+  const tagsHtml=(n.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
+  document.getElementById('detail-body').innerHTML=`
+    <div class="detail-date">${n.date||''}</div>
+    <div class="detail-title">${n.title||'無標題'}</div>
+    ${n.speaker?`<div class="detail-speaker">講道者：${n.speaker}</div>`:''}
+    ${n.like?`<div class="detail-like">${n.like}</div>`:''}
+    ${n.quote?`<div class="detail-quote-box"><div class="detail-quote-label">✦ 金句</div><div class="detail-quote-text">「${n.quote}」</div></div>`:''}
+    <div class="detail-content-label">完整筆記</div>
+    <div class="detail-content">${n.content||'（無內容）'}</div>
+    <div class="detail-tags">${tagsHtml}</div>
+    <button class="delete-btn" onclick="deleteNote('${n.id}')">刪除此筆記</button>`;
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+function closeDetail(){document.getElementById('detail-overlay').classList.remove('open');}
+
+function deleteNote(id){
+  if(!confirm('確定要刪除這篇筆記嗎？'))return;
+  notes=notes.filter(n=>n.id!==id);saveNotes();closeDetail();renderAll();showToast('已刪除');
+}
+
+function filterByTag(tag){selectedTag=selectedTag===tag?null:tag;switchTab('notes');renderNotes();renderTags();}
+function fmtDate(d){if(!d)return'';const[,m,day]=d.split('-');return`${parseInt(m)}/${parseInt(day)}`;}
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+init();
+</script>
