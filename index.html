@@ -466,10 +466,19 @@ const BIBLE={
   </div>
 </div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;padding:20px;">
-  <img id="lightbox-img" src="" style="max-width:100%;max-height:90vh;object-fit:contain;border-radius:8px;">
-  <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:28px;cursor:pointer;">✕</button>
+<!-- LIGHTBOX GALLERY -->
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
+  <!-- Close -->
+  <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:28px;cursor:pointer;z-index:10;">✕</button>
+  <!-- Counter -->
+  <div id="lightbox-counter" style="position:absolute;top:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.7);font-size:13px;"></div>
+  <!-- Image -->
+  <img id="lightbox-img" src="" style="max-width:92vw;max-height:80vh;object-fit:contain;border-radius:8px;user-select:none;">
+  <!-- Left / Right buttons -->
+  <button id="lb-prev" onclick="lbNav(-1)" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:26px;width:44px;height:44px;border-radius:50%;cursor:pointer;">‹</button>
+  <button id="lb-next" onclick="lbNav(1)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:26px;width:44px;height:44px;border-radius:50%;cursor:pointer;">›</button>
+  <!-- Dots -->
+  <div id="lightbox-dots" style="display:flex;gap:6px;margin-top:16px;"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -579,7 +588,8 @@ window.renderNotes=function(){
 function noteHTML(n){
   const expanded=expandedNotes.has(n.id);
   const tags=(n.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
-  const photos=(n.photos||[]).map(src=>`<img src="${src}" onclick="openLightbox('${src}')" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);margin:3px;cursor:pointer;">`).join('');
+  const allPhotosJson=JSON.stringify(n.photos||[]).replace(/"/g,'&quot;');
+  const photos=(n.photos||[]).map((src,i)=>`<img src="${src}" onclick="openLightbox('${src}',JSON.parse(this.closest('[data-photos]').dataset.photos))" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);margin:3px;cursor:pointer;">`).join('');
   const preview=n.quote?`<div class="note-quote" style="margin-top:4px;">「${n.quote}」</div>`
     :n.content?`<div style="font-size:12px;color:var(--text-muted);margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${esc(n.content)}</div>`:'';
   return `<div class="note-card">
@@ -599,7 +609,7 @@ function noteHTML(n){
     ${expanded?`
       ${n.quote?`<div class="note-quote">「${n.quote}」</div>`:''}
       ${n.content?`<div style="font-size:12px;color:var(--text-mid);line-height:1.8;margin:8px 0;white-space:pre-wrap;">${esc(n.content)}</div>`:''}
-      ${photos?`<div style="display:flex;flex-wrap:wrap;margin:4px 0;">${photos}</div>`:''}
+      ${photos?`<div style="display:flex;flex-wrap:wrap;margin:4px 0;" data-photos="${allPhotosJson}">${photos}</div>`:''}
       ${tags?`<div class="note-tags" style="margin-top:6px;">${tags}</div>`:''}
       <div class="note-actions">
         <button class="btn-edit-sm" onclick="event.stopPropagation();openEdit('${n.id}')">✏️ 編輯</button>
@@ -613,14 +623,39 @@ window.toggleExpand=function(id){
   renderNotes();
 };
 
-// LIGHTBOX
-window.openLightbox=function(src){
-  document.getElementById('lightbox').style.display='flex';
-  document.getElementById('lightbox-img').src=src;
+// LIGHTBOX GALLERY
+let lbPhotos=[], lbIndex=0, lbTouchX=0;
+window.openLightbox=function(src, allPhotos){
+  lbPhotos=allPhotos||[src];
+  lbIndex=lbPhotos.indexOf(src);
+  if(lbIndex<0)lbIndex=0;
+  const lb=document.getElementById('lightbox');
+  lb.style.display='flex';
+  lbUpdate();
+  // Touch swipe support
+  lb.ontouchstart=e=>{lbTouchX=e.touches[0].clientX;};
+  lb.ontouchend=e=>{
+    const dx=e.changedTouches[0].clientX-lbTouchX;
+    if(Math.abs(dx)>40) lbNav(dx<0?1:-1);
+  };
 };
-window.closeLightbox=function(){
+function lbUpdate(){
+  document.getElementById('lightbox-img').src=lbPhotos[lbIndex];
+  document.getElementById('lightbox-counter').textContent=lbPhotos.length>1?`${lbIndex+1} / ${lbPhotos.length}`:'';
+  document.getElementById('lb-prev').style.display=lbPhotos.length>1?'':'none';
+  document.getElementById('lb-next').style.display=lbPhotos.length>1?'':'none';
+  document.getElementById('lightbox-dots').innerHTML=lbPhotos.length>1
+    ?lbPhotos.map((_,i)=>`<div style="width:7px;height:7px;border-radius:50%;background:${i===lbIndex?'white':'rgba(255,255,255,0.35)'}; transition:background 0.2s;"></div>`).join(''):'';
+}
+window.lbNav=function(dir){
+  lbIndex=(lbIndex+dir+lbPhotos.length)%lbPhotos.length;
+  lbUpdate();
+};
+window.closeLightbox=function(e){
+  if(e&&e.target!==document.getElementById('lightbox')&&e.target!==document.getElementById('lightbox-img'))return;
   document.getElementById('lightbox').style.display='none';
 };
+document.getElementById('lightbox').addEventListener('click',closeLightbox);
 
 // ADD NOTE
 window.openAddModal=function(){
