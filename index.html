@@ -11,7 +11,6 @@
 <title>May 的靈修筆記</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ── 完全沿用原版 CSS 變數 ── */
 :root{
   --gold:#b8860b;--gold-mid:#d4a017;--gold-light:#f0c040;
   --gold-pale:#fef3c7;--gold-glow:#fffbeb;--cream:#fffdf7;--warm-white:#fff9f0;
@@ -24,17 +23,20 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
-/* ── 原版背景暖光 ── */
-.bg-light{
-  position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 70% 30% at 50% 0%,rgba(255,210,50,0.18) 0%,transparent 70%),
-    linear-gradient(180deg,var(--gold-glow) 0%,var(--cream) 25%);
-}
+.bg-light{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 30% at 50% 0%,rgba(255,210,50,0.18) 0%,transparent 70%),linear-gradient(180deg,var(--gold-glow) 0%,var(--cream) 25%);}
 .app{position:relative;z-index:1;max-width:420px;margin:0 auto;min-height:100vh;padding-bottom:90px;}
 
-/* ── 原版 Header ── */
+/* Login screen */
+.login-screen{position:fixed;inset:0;z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--gold-glow) 0%,var(--cream) 100%);padding:40px 24px;text-align:center;}
+.login-cross{font-size:48px;margin-bottom:16px;filter:drop-shadow(0 2px 8px rgba(184,134,11,0.3));}
+.login-title{font-family:'Noto Serif TC',serif;font-size:26px;color:var(--gold-mid);letter-spacing:8px;margin-bottom:6px;}
+.login-sub{font-size:12px;color:var(--text-muted);letter-spacing:4px;margin-bottom:40px;}
+.login-btn{display:flex;align-items:center;gap:12px;background:white;border:1px solid var(--border-mid);border-radius:14px;padding:14px 24px;font-size:15px;color:var(--text-mid);cursor:pointer;box-shadow:0 4px 20px rgba(184,134,11,0.15);transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.login-btn:hover{box-shadow:0 6px 24px rgba(184,134,11,0.25);transform:translateY(-1px);}
+.login-btn img{width:22px;height:22px;}
+.login-greeting{font-size:11px;color:var(--text-dim);margin-top:32px;letter-spacing:2px;line-height:1.8;}
+
+/* Header */
 .header{padding:26px 20px 18px;text-align:center;}
 .header-greeting{font-size:12px;color:var(--text-mid);letter-spacing:3px;margin-bottom:8px;font-weight:500;}
 .header-may{font-size:14px;font-weight:700;color:var(--text-muted);letter-spacing:4px;margin-bottom:4px;}
@@ -44,21 +46,15 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .header-walk-sub{font-size:12px;color:var(--text-muted);letter-spacing:8px;margin-top:2px;font-weight:500;}
 .gold-line{width:80px;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold-mid),transparent);margin:10px auto 14px;}
 
-/* ── 原版 Baptism card ── */
-.baptism-card{
-  margin:0 20px 14px;
-  background:linear-gradient(135deg,rgba(255,243,199,0.9),rgba(255,251,235,0.95));
-  border:0.5px solid var(--border-mid);border-radius:16px;padding:13px 18px;
-  display:flex;align-items:center;gap:14px;
-  box-shadow:0 2px 12px rgba(184,134,11,0.09);
-}
+/* Baptism card */
+.baptism-card{margin:0 20px 14px;background:linear-gradient(135deg,rgba(255,243,199,0.9),rgba(255,251,235,0.95));border:0.5px solid var(--border-mid);border-radius:16px;padding:13px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(184,134,11,0.09);}
 .baptism-cross{font-size:22px;filter:drop-shadow(0 1px 4px rgba(184,134,11,0.3));}
 .baptism-info{flex:1;}
 .baptism-label{font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-bottom:2px;}
 .baptism-days{font-family:'Noto Sans TC',sans-serif;font-size:22px;font-weight:500;color:var(--gold);line-height:1.2;}
 .baptism-sub{font-size:10px;color:var(--text-dim);margin-top:1px;}
 
-/* ── 原版 Tabs ── */
+/* Tabs */
 .tabs{display:flex;margin:0 20px;background:rgba(255,243,199,0.55);border-radius:12px;padding:3px;border:0.5px solid var(--border);}
 .tab-btn{flex:1;padding:8px 2px;background:none;border:none;color:var(--text-muted);font-size:11px;font-family:'Noto Sans TC',sans-serif;cursor:pointer;border-radius:10px;transition:all 0.25s;}
 .tab-btn.active{background:white;color:var(--gold);font-weight:500;box-shadow:0 1px 6px rgba(184,134,11,0.12);}
@@ -87,7 +83,6 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .note-footer{display:flex;align-items:center;justify-content:space-between;}
 .note-tags{display:flex;flex-wrap:wrap;gap:4px;}
 .tag{font-size:10px;padding:2px 7px;background:var(--gold-glow);border:0.5px solid var(--border);border-radius:20px;color:var(--text-muted);}
-.like-display{font-size:16px;}
 .note-actions{display:flex;gap:8px;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--border);}
 .btn-edit-sm{background:none;border:0.5px solid var(--border-mid);color:var(--text-muted);padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
 .btn-edit-sm:hover{border-color:var(--gold-mid);color:var(--gold);}
@@ -95,7 +90,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .btn-del-sm:hover{background:rgba(220,38,38,0.06);}
 
 /* FAB */
-.fab{position:fixed;bottom:28px;right:24px;width:54px;height:54px;background:linear-gradient(135deg,var(--gold-mid),var(--gold));border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(184,134,11,0.4),0 0 0 4px rgba(240,192,64,0.15);transition:transform 0.2s,box-shadow 0.2s;z-index:100;}
+.fab{position:fixed;bottom:28px;right:24px;width:54px;height:54px;background:linear-gradient(135deg,var(--gold-mid),var(--gold));border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(184,134,11,0.4),0 0 0 4px rgba(240,192,64,0.15);transition:transform 0.2s;z-index:100;}
 .fab:hover{transform:scale(1.06);}
 .fab svg{color:white;}
 
@@ -127,12 +122,11 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .upload-text{font-size:12px;color:var(--text-muted);}
 .upload-text span{color:var(--gold);}
 .photo-preview-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-.photo-thumb{width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border-mid);}
 .save-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold-mid),var(--gold));border:none;border-radius:12px;color:white;font-size:14px;font-weight:500;font-family:'Noto Sans TC',sans-serif;cursor:pointer;margin-top:6px;letter-spacing:1px;box-shadow:0 3px 14px rgba(184,134,11,0.3);transition:opacity 0.2s;}
 .save-btn:hover{opacity:0.92;}
 .save-btn:disabled{opacity:0.5;cursor:not-allowed;}
 
-/* Verse lib */
+/* Verse */
 .verse-lib{padding:14px 20px 0;}
 .verse-card{background:white;border:0.5px solid var(--border-mid);border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:0 1px 8px rgba(184,134,11,0.06);position:relative;overflow:hidden;}
 .verse-card::before{content:'✦';position:absolute;right:14px;top:12px;color:var(--gold-light);font-size:18px;}
@@ -145,7 +139,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .tag-cloud-item{padding:6px 14px;border-radius:20px;border:0.5px solid var(--border);background:white;color:var(--text-muted);font-size:13px;cursor:pointer;transition:all 0.2s;}
 .tag-cloud-item:hover,.tag-cloud-item.active{border-color:var(--gold-mid);color:var(--gold);background:var(--gold-pale);}
 
-/* Reading tab */
+/* Reading */
 .reading-tab{padding:14px 20px 0;}
 .reading-summary{display:flex;gap:10px;margin-bottom:14px;}
 .r-stat{flex:1;background:white;border:0.5px solid var(--border);border-radius:14px;padding:12px 10px;text-align:center;box-shadow:0 1px 6px rgba(184,134,11,0.06);}
@@ -157,7 +151,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .r-stat.ot .r-stat-num{color:var(--ot-color);}
 .r-stat-sub{font-size:10px;color:var(--text-dim);margin-top:2px;}
 .book-section-title{font-size:11px;color:var(--text-muted);letter-spacing:2px;margin:14px 0 8px;}
-.book-card{background:white;border:0.5px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(184,134,11,0.05);}
+.book-card{background:white;border:0.5px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 6px rgba(184,134,11,0.05);cursor:pointer;transition:all 0.2s;}
+.book-card:hover{border-color:var(--gold-mid);transform:translateY(-1px);}
 .book-card.complete{border-color:var(--complete-border);background:var(--complete-bg);}
 .book-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .book-name-label{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;color:var(--text);}
@@ -165,16 +160,13 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .book-badge.NT{background:var(--nt-bg);color:var(--nt-color);border:0.5px solid var(--nt-border);}
 .book-badge.OT{background:var(--ot-bg);color:var(--ot-color);border:0.5px solid var(--ot-border);}
 .book-badge.done{background:var(--complete-bg);color:var(--complete-color);border:0.5px solid var(--complete-border);}
-.book-progress-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.book-progress-row{display:flex;align-items:center;gap:8px;}
 .progress-bar-wrap{flex:1;height:5px;background:rgba(184,134,11,0.1);border-radius:3px;overflow:hidden;}
 .progress-bar-fill{height:100%;border-radius:3px;transition:width 0.4s ease;}
 .progress-bar-fill.NT{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
 .progress-bar-fill.OT{background:linear-gradient(90deg,#b45309,#d97706);}
 .progress-bar-fill.done{background:linear-gradient(90deg,#16a34a,#4ade80);}
 .progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap;}
-.complete-times{font-size:11px;color:var(--complete-color);font-weight:500;}
-
-/* Quick complete */
 .init-section{background:white;border:0.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(184,134,11,0.05);}
 .init-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;}
 .init-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.6;}
@@ -183,13 +175,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .init-card:hover{background:var(--gold-pale);border-color:var(--gold-mid);transform:translateY(-1px);}
 .init-card-icon{font-size:22px;margin-bottom:6px;}
 .init-card-label{font-size:11px;color:var(--text-mid);line-height:1.5;}
-
-/* Empty */
 .empty{text-align:center;padding:48px 20px;color:var(--text-dim);}
 .empty-icon{font-size:36px;margin-bottom:12px;}
 .empty-text{font-size:13px;line-height:1.9;}
-
-/* Testament pills in reading modal */
 .testament-row{display:flex;gap:8px;margin-bottom:14px;}
 .testament-pill{flex:1;padding:9px;border-radius:10px;border:0.5px solid var(--border-mid);background:white;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
 .testament-pill .t-label{font-size:13px;color:var(--text-muted);display:block;}
@@ -201,16 +189,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .book-select-wrap select{width:100%;background:white;border:0.5px solid var(--border-mid);border-radius:10px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Noto Sans TC',sans-serif;outline:none;appearance:none;}
 .chapter-row{display:flex;gap:8px;}
 .chapter-row .form-group{flex:1;}
-
-/* Quick complete modal date */
 .init-modal-date{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
 .init-modal-date label{font-size:11px;color:var(--gold);white-space:nowrap;font-weight:500;}
-
-/* Toast */
+.reading-log-item{background:white;border:0.5px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12px;}
+.reading-log-header{display:flex;justify-content:space-between;margin-bottom:3px;}
+.reading-log-book{font-weight:500;color:var(--text);}
+.reading-log-date{color:var(--text-dim);}
+.reading-log-ch{color:var(--text-muted);}
+.reading-log-note{color:var(--text-mid);margin-top:4px;line-height:1.6;}
 .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--gold-pale);font-size:13px;padding:10px 20px;border-radius:20px;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
 .toast.show{opacity:1;}
-
-/* Celebration */
 .celebration{position:fixed;inset:0;z-index:500;align-items:center;justify-content:center;background:rgba(61,47,0,0.5);backdrop-filter:blur(4px);display:none;}
 .celebration.show{display:flex;}
 .celebration-box{background:white;border-radius:24px;padding:32px 28px;text-align:center;max-width:300px;box-shadow:0 20px 60px rgba(184,134,11,0.3);}
@@ -218,20 +206,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--t
 .celebration-title{font-size:20px;color:var(--gold-mid);margin-bottom:8px;letter-spacing:2px;font-family:'Noto Serif TC',serif;}
 .celebration-text{font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;white-space:pre-line;}
 .celebration-btn{background:linear-gradient(135deg,var(--gold-mid),var(--gold));border:none;border-radius:12px;padding:11px 28px;color:white;font-size:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-
-/* Loading */
 .loading-overlay{position:fixed;inset:0;background:var(--cream);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
 .loading-cross{font-size:30px;color:var(--gold-mid);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 .loading-text{font-size:13px;color:var(--text-muted);letter-spacing:2px;}
 
-/* Edit modal extra */
-.reading-log-item{background:white;border:0.5px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12px;}
-.reading-log-header{display:flex;justify-content:space-between;margin-bottom:3px;}
-.reading-log-book{font-weight:500;color:var(--text);}
-.reading-log-date{color:var(--text-dim);}
-.reading-log-ch{color:var(--text-muted);}
-.reading-log-note{color:var(--text-mid);margin-top:4px;line-height:1.6;}
+/* Book detail modal */
+.book-detail-item{background:var(--gold-glow);border:0.5px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+.book-detail-ch{font-size:12px;color:var(--text-muted);margin-bottom:3px;}
+.book-detail-date{font-size:11px;color:var(--text-dim);}
+.book-detail-note{font-size:12px;color:var(--text-mid);margin-top:5px;line-height:1.7;white-space:pre-wrap;}
 </style>
 
 <script>
@@ -270,9 +254,20 @@ const BIBLE={
   <div class="loading-text">載入中…</div>
 </div>
 
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen" style="display:none;">
+  <div class="login-cross">✝</div>
+  <div class="login-title">與 神 同 行</div>
+  <div class="login-sub">靈 修 筆 記</div>
+  <button class="login-btn" onclick="signInWithGoogle()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    用 Google 帳號登入
+  </button>
+  <div class="login-greeting">願恩惠與平安歸於妳<br>May，歡迎回來</div>
+</div>
+
 <div class="bg-light"></div>
-<div class="app">
-  <!-- Header（完全照原版） -->
+<div class="app" id="mainApp" style="display:none;">
   <div class="header">
     <div class="header-greeting">願恩惠與平安歸於妳</div>
     <div class="header-may">May 的</div>
@@ -285,7 +280,6 @@ const BIBLE={
     <div class="gold-line"></div>
   </div>
 
-  <!-- Baptism card（完全照原版，只有一個✝） -->
   <div class="baptism-card">
     <div class="baptism-cross">✝</div>
     <div class="baptism-info">
@@ -295,7 +289,6 @@ const BIBLE={
     </div>
   </div>
 
-  <!-- Tabs（完全照原版） -->
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('notes')" id="tab-btn-notes">筆記</button>
     <button class="tab-btn" onclick="switchTab('verses')" id="tab-btn-verses">金句</button>
@@ -303,7 +296,6 @@ const BIBLE={
     <button class="tab-btn" onclick="switchTab('reading')" id="tab-btn-reading">讀經</button>
   </div>
 
-  <!-- Search -->
   <div class="search-wrap" id="search-wrap">
     <div class="search-box">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -317,8 +309,7 @@ const BIBLE={
   <div id="tab-tags" class="tag-cloud" style="display:none"></div>
 </div>
 
-<!-- FAB -->
-<button class="fab" onclick="openAddModal()">
+<button class="fab" id="fab" onclick="openAddModal()" style="display:none;">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
 </button>
 
@@ -456,6 +447,16 @@ const BIBLE={
   </div>
 </div>
 
+<!-- BOOK DETAIL MODAL -->
+<div class="modal-overlay" id="book-detail-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="book-detail-title"></div>
+    <div id="book-detail-content"></div>
+    <button class="save-btn" style="background:white;color:var(--gold);border:0.5px solid var(--border-mid);box-shadow:none;margin-top:8px;" onclick="closeModal('book-detail-modal')">關閉</button>
+  </div>
+</div>
+
 <!-- CELEBRATION -->
 <div class="celebration" id="celebration">
   <div class="celebration-box">
@@ -466,18 +467,13 @@ const BIBLE={
   </div>
 </div>
 
-<!-- LIGHTBOX GALLERY -->
+<!-- LIGHTBOX -->
 <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
-  <!-- Close -->
   <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:28px;cursor:pointer;z-index:10;">✕</button>
-  <!-- Counter -->
   <div id="lightbox-counter" style="position:absolute;top:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.7);font-size:13px;"></div>
-  <!-- Image -->
   <img id="lightbox-img" src="" style="max-width:92vw;max-height:80vh;object-fit:contain;border-radius:8px;user-select:none;">
-  <!-- Left / Right buttons -->
   <button id="lb-prev" onclick="lbNav(-1)" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:26px;width:44px;height:44px;border-radius:50%;cursor:pointer;">‹</button>
   <button id="lb-next" onclick="lbNav(1)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:26px;width:44px;height:44px;border-radius:50%;cursor:pointer;">›</button>
-  <!-- Dots -->
   <div id="lightbox-dots" style="display:flex;gap:6px;margin-top:16px;"></div>
 </div>
 
@@ -486,6 +482,7 @@ const BIBLE={
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBicBGSYrDuoISSbrSxf0nHw6D3FMw4HIM",
@@ -497,24 +494,47 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 // STATE
 let notes=[], readings=[];
 let addType='主日講道', addLike='';
 let editType='主日講道', editLike='', editingId=null;
 let currentTestament='NT';
-let addPhotos=[];
-let editPhotos=[];
+let addPhotos=[], editPhotos=[];
 let expandedNotes=new Set();
 let quickTarget=null;
 let selectedTag=null;
+let currentUser=null;
 
-// INIT
-async function init() {
-  updateBaptismDays();
-  setToday();
-  renderBookSelect();
-  try {
+// AUTH
+window.signInWithGoogle=async function(){
+  try{ await signInWithPopup(auth,provider); }
+  catch(e){ console.error(e); showToast('登入失敗，請再試一次'); }
+};
+
+onAuthStateChanged(auth, async(user)=>{
+  document.getElementById('loadingOverlay').style.display='none';
+  if(user){
+    currentUser=user;
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainApp').style.display='';
+    document.getElementById('fab').style.display='';
+    updateBaptismDays();
+    setToday();
+    renderBookSelect();
+    await loadData();
+  } else {
+    currentUser=null;
+    document.getElementById('loginScreen').style.display='flex';
+    document.getElementById('mainApp').style.display='none';
+    document.getElementById('fab').style.display='none';
+  }
+});
+
+async function loadData(){
+  try{
     const nq=query(collection(db,'notes'),orderBy('createdAt','desc'));
     const ns=await getDocs(nq);
     notes=ns.docs.map(d=>({id:d.id,...d.data()}));
@@ -522,8 +542,7 @@ async function init() {
     const rs=await getDocs(rq);
     readings=rs.docs.map(d=>({id:d.id,...d.data()}));
     renderAll();
-  } catch(e){ console.error(e); showToast('資料載入失敗'); }
-  document.getElementById('loadingOverlay').style.display='none';
+  }catch(e){ console.error(e); showToast('資料載入失敗'); }
 }
 
 function updateBaptismDays(){
@@ -531,7 +550,7 @@ function updateBaptismDays(){
   const now=new Date();
   const total=Math.floor((now-baptism)/(1000*60*60*24));
   const y=Math.floor(total/365), d=total%365;
-  document.getElementById('baptism-days').textContent = y>0 ? `${y} 年 ${d} 天` : `${total} 天`;
+  document.getElementById('baptism-days').textContent=y>0?`${y} 年 ${d} 天`:`${total} 天`;
 }
 
 function setToday(){
@@ -568,30 +587,18 @@ window.renderNotes=function(){
     (n.tags||[]).some(t=>t.toLowerCase().includes(search))
   );
   const el=document.getElementById('tab-notes');
-  if(!list.length){
-    el.innerHTML=`<div class="empty"><div class="empty-icon">✦</div><div class="empty-text">還沒有筆記<br>點右下方 + 開始記錄</div></div>`;
-    return;
-  }
-  // Group by month
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">✦</div><div class="empty-text">還沒有筆記<br>點右下方 + 開始記錄</div></div>`;return;}
   const groups={};
-  list.forEach(n=>{
-    const m=n.date?n.date.slice(0,7):'未知';
-    if(!groups[m])groups[m]=[];
-    groups[m].push(n);
-  });
-  el.innerHTML=Object.entries(groups).map(([m,ns])=>`
-    <div class="month-label">${m.replace('-','年')}月</div>
-    ${ns.map(noteHTML).join('')}
-  `).join('');
+  list.forEach(n=>{const m=n.date?n.date.slice(0,7):'未知';if(!groups[m])groups[m]=[];groups[m].push(n);});
+  el.innerHTML=Object.entries(groups).map(([m,ns])=>`<div class="month-label">${m.replace('-','年')}月</div>${ns.map(noteHTML).join('')}`).join('');
 };
 
 function noteHTML(n){
   const expanded=expandedNotes.has(n.id);
   const tags=(n.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
   const allPhotosJson=JSON.stringify(n.photos||[]).replace(/"/g,'&quot;');
-  const photos=(n.photos||[]).map((src,i)=>`<img src="${src}" onclick="openLightbox('${src}',JSON.parse(this.closest('[data-photos]').dataset.photos))" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);margin:3px;cursor:pointer;">`).join('');
-  const preview=n.quote?`<div class="note-quote" style="margin-top:4px;">「${n.quote}」</div>`
-    :n.content?`<div style="font-size:12px;color:var(--text-muted);margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${esc(n.content)}</div>`:'';
+  const photos=(n.photos||[]).map(src=>`<img src="${src}" onclick="openLightbox('${src}',JSON.parse(this.closest('[data-photos]').dataset.photos))" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);margin:3px;cursor:pointer;">`).join('');
+  const preview=n.quote?`<div class="note-quote" style="margin-top:4px;">「${n.quote}」</div>`:n.content?`<div style="font-size:12px;color:var(--text-muted);margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${esc(n.content)}</div>`:'';
   return `<div class="note-card">
     <div style="cursor:pointer;" onclick="toggleExpand('${n.id}')">
       <div class="note-meta">
@@ -618,262 +625,200 @@ function noteHTML(n){
   </div>`;
 }
 window.toggleExpand=function(id){
-  if(expandedNotes.has(id)) expandedNotes.delete(id);
-  else expandedNotes.add(id);
+  if(expandedNotes.has(id)) expandedNotes.delete(id); else expandedNotes.add(id);
   renderNotes();
 };
 
-// LIGHTBOX GALLERY
+// LIGHTBOX
 let lbPhotos=[], lbIndex=0, lbTouchX=0;
-window.openLightbox=function(src, allPhotos){
-  lbPhotos=allPhotos||[src];
-  lbIndex=lbPhotos.indexOf(src);
-  if(lbIndex<0)lbIndex=0;
-  const lb=document.getElementById('lightbox');
-  lb.style.display='flex';
-  lbUpdate();
-  // Touch swipe support
+window.openLightbox=function(src,allPhotos){
+  lbPhotos=allPhotos||[src]; lbIndex=lbPhotos.indexOf(src); if(lbIndex<0)lbIndex=0;
+  const lb=document.getElementById('lightbox'); lb.style.display='flex'; lbUpdate();
   lb.ontouchstart=e=>{lbTouchX=e.touches[0].clientX;};
-  lb.ontouchend=e=>{
-    const dx=e.changedTouches[0].clientX-lbTouchX;
-    if(Math.abs(dx)>40) lbNav(dx<0?1:-1);
-  };
+  lb.ontouchend=e=>{const dx=e.changedTouches[0].clientX-lbTouchX;if(Math.abs(dx)>40)lbNav(dx<0?1:-1);};
 };
 function lbUpdate(){
   document.getElementById('lightbox-img').src=lbPhotos[lbIndex];
   document.getElementById('lightbox-counter').textContent=lbPhotos.length>1?`${lbIndex+1} / ${lbPhotos.length}`:'';
   document.getElementById('lb-prev').style.display=lbPhotos.length>1?'':'none';
   document.getElementById('lb-next').style.display=lbPhotos.length>1?'':'none';
-  document.getElementById('lightbox-dots').innerHTML=lbPhotos.length>1
-    ?lbPhotos.map((_,i)=>`<div style="width:7px;height:7px;border-radius:50%;background:${i===lbIndex?'white':'rgba(255,255,255,0.35)'}; transition:background 0.2s;"></div>`).join(''):'';
+  document.getElementById('lightbox-dots').innerHTML=lbPhotos.length>1?lbPhotos.map((_,i)=>`<div style="width:7px;height:7px;border-radius:50%;background:${i===lbIndex?'white':'rgba(255,255,255,0.35)'};transition:background 0.2s;"></div>`).join(''):'';
 }
-window.lbNav=function(dir){
-  lbIndex=(lbIndex+dir+lbPhotos.length)%lbPhotos.length;
-  lbUpdate();
-};
+window.lbNav=function(dir){lbIndex=(lbIndex+dir+lbPhotos.length)%lbPhotos.length;lbUpdate();};
 window.closeLightbox=function(e){
   if(e&&e.target!==document.getElementById('lightbox')&&e.target!==document.getElementById('lightbox-img'))return;
   document.getElementById('lightbox').style.display='none';
 };
 document.getElementById('lightbox').addEventListener('click',closeLightbox);
 
-// ADD NOTE
-window.openAddModal=function(){
-  document.getElementById('note-modal').classList.add('open');
-};
-window.closeModal=function(id){ document.getElementById(id).classList.remove('open'); };
+// MODALS
+window.openAddModal=function(){document.getElementById('note-modal').classList.add('open');};
+window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
 document.getElementById('note-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('note-modal');});
 document.getElementById('edit-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEdit();});
 document.getElementById('reading-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('reading-modal');});
 document.getElementById('quick-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('quick-modal');});
+document.getElementById('book-detail-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('book-detail-modal');});
 
 // CLOUDINARY
-const CLOUD_NAME='DAFCWU8vc';
-const UPLOAD_PRESET='faith_notes_upload';
+const CLOUD_NAME='DAFCWU8vc', UPLOAD_PRESET='faith_notes_upload';
 async function uploadToCloudinary(file){
-  const fd=new FormData();
-  fd.append('file',file);
-  fd.append('upload_preset',UPLOAD_PRESET);
+  const fd=new FormData();fd.append('file',file);fd.append('upload_preset',UPLOAD_PRESET);
   const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:fd});
-  const data=await res.json();
-  if(!data.secure_url) throw new Error('Upload failed');
-  return data.secure_url;
+  const data=await res.json();if(!data.secure_url)throw new Error('Upload failed');return data.secure_url;
 }
 
 window.selectType=function(el,mode){
-  const row=document.getElementById(mode+'-type-row');
-  row.querySelectorAll('.type-pill').forEach(p=>p.classList.remove('selected'));
-  el.classList.add('selected');
-  if(mode==='add') addType=el.textContent;
-  else editType=el.textContent;
+  document.getElementById(mode+'-type-row').querySelectorAll('.type-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');if(mode==='add')addType=el.textContent;else editType=el.textContent;
 };
 window.selectLike=function(el,mode){
-  const row=document.getElementById(mode+'-like-row');
-  row.querySelectorAll('.like-pill').forEach(p=>p.classList.remove('selected'));
-  el.classList.add('selected');
-  const emoji=el.querySelector('.like-emoji').textContent;
-  if(mode==='add') addLike=emoji;
-  else editLike=emoji;
+  document.getElementById(mode+'-like-row').querySelectorAll('.like-pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');const emoji=el.querySelector('.like-emoji').textContent;
+  if(mode==='add')addLike=emoji;else editLike=emoji;
 };
-
-// Photo handling — works for both add & edit
 window.handlePhotos=function(e,mode){
-  const files=Array.from(e.target.files);
-  files.forEach(file=>{
+  Array.from(e.target.files).forEach(file=>{
     const previewUrl=URL.createObjectURL(file);
-    if(mode==='add') addPhotos.push({file,previewUrl});
-    else editPhotos.push({file,previewUrl});
+    if(mode==='add')addPhotos.push({file,previewUrl});else editPhotos.push({file,previewUrl});
   });
-  if(mode==='add') renderPhotoPreviews('add');
-  else renderPhotoPreviews('edit');
-  e.target.value='';
+  renderPhotoPreviews(mode);e.target.value='';
 };
 function renderPhotoPreviews(mode){
   const photos=mode==='add'?addPhotos:editPhotos;
   const el=document.getElementById(mode==='add'?'add-photo-preview':'edit-photo-preview');
-  el.innerHTML=photos.map((p,i)=>`
-    <div style="position:relative;display:inline-block;margin:4px;">
-      <img src="${p.previewUrl||p}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);cursor:pointer;" onclick="openLightbox('${p.previewUrl||p}')">
-      <button onclick="removePhoto('${mode}',${i})" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;background:#e53e3e;color:white;border:none;border-radius:50%;font-size:11px;cursor:pointer;">✕</button>
-    </div>`).join('');
+  el.innerHTML=photos.map((p,i)=>`<div style="position:relative;display:inline-block;margin:4px;">
+    <img src="${p.previewUrl||p}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:0.5px solid var(--border);cursor:pointer;" onclick="openLightbox('${p.previewUrl||p}')">
+    <button onclick="removePhoto('${mode}',${i})" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;background:#e53e3e;color:white;border:none;border-radius:50%;font-size:11px;cursor:pointer;">✕</button>
+  </div>`).join('');
 }
 window.removePhoto=function(mode,i){
-  if(mode==='add') addPhotos.splice(i,1);
-  else editPhotos.splice(i,1);
-  renderPhotoPreviews(mode);
+  if(mode==='add')addPhotos.splice(i,1);else editPhotos.splice(i,1);renderPhotoPreviews(mode);
 };
 
 window.saveNote=async function(){
-  const btn=document.getElementById('add-save-btn');
-  btn.disabled=true;
+  const btn=document.getElementById('add-save-btn');btn.disabled=true;
   try{
     const photoUrls=[];
-    for(let i=0;i<addPhotos.length;i++){
-      btn.textContent=`上傳照片 ${i+1}/${addPhotos.length}…`;
-      const url=await uploadToCloudinary(addPhotos[i].file);
-      photoUrls.push(url);
-    }
+    for(let i=0;i<addPhotos.length;i++){btn.textContent=`上傳照片 ${i+1}/${addPhotos.length}…`;const url=await uploadToCloudinary(addPhotos[i].file);photoUrls.push(url);}
     btn.textContent='儲存中…';
-    const note={
-      type:addType, date:document.getElementById('f-date').value,
-      speaker:document.getElementById('f-speaker').value.trim(),
-      title:document.getElementById('f-title').value.trim(),
-      like:addLike, content:document.getElementById('f-content').value.trim(),
-      quote:document.getElementById('f-quote').value.trim(),
-      tags:document.getElementById('f-tags').value.trim().split(/\s+/).filter(Boolean),
-      photos:photoUrls, createdAt:new Date().toISOString()
-    };
-    const ref=await addDoc(collection(db,'notes'),note);
-    note.id=ref.id; notes.unshift(note);
-    closeModal('note-modal'); clearAddForm(); renderAll();
-    showToast('✦ 筆記已儲存');
+    const note={type:addType,date:document.getElementById('f-date').value,speaker:document.getElementById('f-speaker').value.trim(),title:document.getElementById('f-title').value.trim(),like:addLike,content:document.getElementById('f-content').value.trim(),quote:document.getElementById('f-quote').value.trim(),tags:document.getElementById('f-tags').value.trim().split(/\s+/).filter(Boolean),photos:photoUrls,createdAt:new Date().toISOString()};
+    const ref=await addDoc(collection(db,'notes'),note);note.id=ref.id;notes.unshift(note);
+    closeModal('note-modal');clearAddForm();renderAll();showToast('✦ 筆記已儲存');
   }catch(e){console.error(e);showToast('儲存失敗，請重試');}
   btn.disabled=false;btn.textContent='✦ 儲存筆記';
 };
 function clearAddForm(){
   ['f-date','f-speaker','f-title','f-content','f-quote','f-tags'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('add-photo-preview').innerHTML='';
-  document.getElementById('add-type-row').querySelectorAll('.type-pill').forEach((p,i)=>{p.classList.toggle('selected',i===0);});
+  document.getElementById('add-type-row').querySelectorAll('.type-pill').forEach((p,i)=>p.classList.toggle('selected',i===0));
   document.getElementById('add-like-row').querySelectorAll('.like-pill').forEach(p=>p.classList.remove('selected'));
-  addPhotos=[]; addType='主日講道'; addLike=''; setToday();
+  addPhotos=[];addType='主日講道';addLike='';setToday();
 }
-
-// EDIT NOTE
 window.openEdit=function(id){
   const n=notes.find(x=>x.id===id);if(!n)return;
-  editingId=id; editType=n.type||'主日講道'; editLike=n.like||'';
+  editingId=id;editType=n.type||'主日講道';editLike=n.like||'';
   editPhotos=(n.photos||[]).map(url=>({previewUrl:url,uploaded:url}));
-  document.getElementById('e-date').value=n.date||'';
-  document.getElementById('e-speaker').value=n.speaker||'';
-  document.getElementById('e-title').value=n.title||'';
-  document.getElementById('e-content').value=n.content||'';
-  document.getElementById('e-quote').value=n.quote||'';
-  document.getElementById('e-tags').value=(n.tags||[]).join(' ');
-  document.getElementById('edit-type-row').querySelectorAll('.type-pill').forEach(p=>{p.classList.toggle('selected',p.textContent===editType);});
-  document.getElementById('edit-like-row').querySelectorAll('.like-pill').forEach(p=>{p.classList.toggle('selected',p.querySelector('.like-emoji').textContent===editLike);});
-  renderPhotoPreviews('edit');
-  document.getElementById('edit-modal').classList.add('open');
+  document.getElementById('e-date').value=n.date||'';document.getElementById('e-speaker').value=n.speaker||'';
+  document.getElementById('e-title').value=n.title||'';document.getElementById('e-content').value=n.content||'';
+  document.getElementById('e-quote').value=n.quote||'';document.getElementById('e-tags').value=(n.tags||[]).join(' ');
+  document.getElementById('edit-type-row').querySelectorAll('.type-pill').forEach(p=>p.classList.toggle('selected',p.textContent===editType));
+  document.getElementById('edit-like-row').querySelectorAll('.like-pill').forEach(p=>p.classList.toggle('selected',p.querySelector('.like-emoji').textContent===editLike));
+  renderPhotoPreviews('edit');document.getElementById('edit-modal').classList.add('open');
 };
 window.closeEdit=function(){document.getElementById('edit-modal').classList.remove('open');editingId=null;editPhotos=[];};
 window.updateNote=async function(){
-  if(!editingId)return;
-  const btn=document.getElementById('edit-save-btn');
-  btn.disabled=true;btn.textContent='儲存中…';
+  if(!editingId)return;const btn=document.getElementById('edit-save-btn');btn.disabled=true;btn.textContent='儲存中…';
   try{
     const photoUrls=[];
-    for(const p of editPhotos){
-      if(p.file){
-        const url=await uploadToCloudinary(p.file);
-        photoUrls.push(url);
-      } else {
-        photoUrls.push(p.uploaded||p.previewUrl);
-      }
-    }
-    const updated={
-      type:editType, date:document.getElementById('e-date').value,
-      speaker:document.getElementById('e-speaker').value.trim(),
-      title:document.getElementById('e-title').value.trim(),
-      like:editLike, content:document.getElementById('e-content').value.trim(),
-      quote:document.getElementById('e-quote').value.trim(),
-      tags:document.getElementById('e-tags').value.trim().split(/\s+/).filter(Boolean),
-      photos:photoUrls, updatedAt:new Date().toISOString()
-    };
+    for(const p of editPhotos){if(p.file){const url=await uploadToCloudinary(p.file);photoUrls.push(url);}else{photoUrls.push(p.uploaded||p.previewUrl);}}
+    const updated={type:editType,date:document.getElementById('e-date').value,speaker:document.getElementById('e-speaker').value.trim(),title:document.getElementById('e-title').value.trim(),like:editLike,content:document.getElementById('e-content').value.trim(),quote:document.getElementById('e-quote').value.trim(),tags:document.getElementById('e-tags').value.trim().split(/\s+/).filter(Boolean),photos:photoUrls,updatedAt:new Date().toISOString()};
     await updateDoc(doc(db,'notes',editingId),updated);
-    const idx=notes.findIndex(n=>n.id===editingId);
-    if(idx!==-1)notes[idx]={...notes[idx],...updated};
-    closeEdit(); renderAll(); renderVerses(); renderTags();
-    showToast('✦ 已更新筆記');
+    const idx=notes.findIndex(n=>n.id===editingId);if(idx!==-1)notes[idx]={...notes[idx],...updated};
+    closeEdit();renderAll();renderVerses();renderTags();showToast('✦ 已更新筆記');
   }catch(e){console.error(e);showToast('更新失敗');}
   btn.disabled=false;btn.textContent='✦ 儲存修改';
 };
 window.deleteNote=async function(id){
   if(!confirm('確定要刪除這篇筆記嗎？'))return;
-  try{
-    await deleteDoc(doc(db,'notes',id));
-    notes=notes.filter(n=>n.id!==id);
-    renderAll(); renderVerses(); renderTags(); showToast('已刪除');
-  }catch(e){showToast('刪除失敗');}
+  try{await deleteDoc(doc(db,'notes',id));notes=notes.filter(n=>n.id!==id);renderAll();renderVerses();renderTags();showToast('已刪除');}
+  catch(e){showToast('刪除失敗');}
 };
 
 // VERSES
 function renderVerses(){
-  const list=notes.filter(n=>n.quote);
-  const el=document.getElementById('tab-verses');
-  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">✨</div><div class="empty-text">還沒有金句<br>儲存筆記時填入金句就會出現在這裡</div></div>`;return;}
-  el.innerHTML=list.map(n=>`<div class="verse-card">
-    <div class="verse-text">「${n.quote}」</div>
-    <div class="verse-from">${n.date||''} ${n.type||''} ${n.speaker?'— '+n.speaker:''}</div>
-  </div>`).join('');
+  const list=notes.filter(n=>n.quote);const el=document.getElementById('tab-verses');
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">✨</div><div class="empty-text">還沒有金句</div></div>`;return;}
+  el.innerHTML=list.map(n=>`<div class="verse-card"><div class="verse-text">「${n.quote}」</div><div class="verse-from">${n.date||''} ${n.type||''} ${n.speaker?'— '+n.speaker:''}</div></div>`).join('');
 }
 
 // TAGS
 function renderTags(){
-  const tc={};
-  notes.forEach(n=>(n.tags||[]).forEach(t=>{if(t)tc[t]=(tc[t]||0)+1;}));
+  const tc={};notes.forEach(n=>(n.tags||[]).forEach(t=>{if(t)tc[t]=(tc[t]||0)+1;}));
   const el=document.getElementById('tab-tags');
   if(!Object.keys(tc).length){el.innerHTML=`<div class="empty"><div class="empty-icon">🏷️</div><div class="empty-text">還沒有標籤</div></div>`;return;}
-  const cloud=Object.entries(tc).sort((a,b)=>b[1]-a[1]).map(([t,c])=>
-    `<div class="tag-cloud-item${selectedTag===t?' active':''}" onclick="filterByTag('${t}')">#${t} <span style="opacity:0.5;font-size:11px;">${c}</span></div>`
-  ).join('');
+  const cloud=Object.entries(tc).sort((a,b)=>b[1]-a[1]).map(([t,c])=>`<div class="tag-cloud-item${selectedTag===t?' active':''}" onclick="filterByTag('${t}')">#${t} <span style="opacity:0.5;font-size:11px;">${c}</span></div>`).join('');
   const tagged=selectedTag?notes.filter(n=>(n.tags||[]).includes(selectedTag)).map(noteHTML).join(''):'';
   el.innerHTML=`<div class="tag-cloud-wrap">${cloud}</div>${selectedTag?`<div class="month-label">#${selectedTag}</div>${tagged}`:''}`;
 }
-window.filterByTag=function(tag){
-  selectedTag=selectedTag===tag?null:tag;
-  switchTab('tags');
-};
+window.filterByTag=function(tag){selectedTag=selectedTag===tag?null:tag;switchTab('tags');};
 
 // READING
 window.selectTestament=function(t){
   currentTestament=t;
-  document.getElementById('pill-NT').classList.toggle('selected',t==='NT');
-  document.getElementById('pill-NT').classList.toggle('NT',true);
-  document.getElementById('pill-OT').classList.toggle('selected',t==='OT');
-  document.getElementById('pill-OT').classList.toggle('OT',true);
+  document.getElementById('pill-NT').classList.toggle('selected',t==='NT');document.getElementById('pill-NT').classList.add('NT');
+  document.getElementById('pill-OT').classList.toggle('selected',t==='OT');document.getElementById('pill-OT').classList.add('OT');
   renderBookSelect();
 };
 function renderBookSelect(){
-  const books=BIBLE[currentTestament];
-  document.getElementById('r-book').innerHTML=books.map(b=>`<option value="${b.name}">${b.name}（${b.chapters}章）</option>`).join('');
+  document.getElementById('r-book').innerHTML=BIBLE[currentTestament].map(b=>`<option value="${b.name}">${b.name}（${b.chapters}章）</option>`).join('');
 }
-
-// Reading progress from readings
 function getBookProgress(){
   const prog={};
   readings.forEach(r=>{
-    const key=r.testament+':'+r.book;
-    if(!prog[key])prog[key]={readChapters:new Set(),book:r.book,testament:r.testament};
-    for(let c=r.fromCh||r.from;c<=(r.toCh||r.to);c++) prog[key].readChapters.add(c);
+    const key=(r.testament||'NT')+':'+r.book;
+    if(!prog[key])prog[key]={readChapters:new Set(),book:r.book,testament:r.testament||'NT'};
+    for(let c=r.fromCh||r.from;c<=(r.toCh||r.to);c++)prog[key].readChapters.add(c);
   });
   return prog;
 }
 
 function renderReading(){
   const prog=getBookProgress();
-  // Stats
   let ntDone=0,otDone=0;
   BIBLE.NT.forEach(b=>{const k='NT:'+b.name;if(prog[k]&&prog[k].readChapters.size>=b.chapters)ntDone++;});
   BIBLE.OT.forEach(b=>{const k='OT:'+b.name;if(prog[k]&&prog[k].readChapters.size>=b.chapters)otDone++;});
+
+  // Reading search
+  const readSearch=`<div class="search-wrap" style="padding:0 0 12px;">
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="reading-search" placeholder="搜尋書卷或筆記內容…" oninput="filterReadingLog()">
+    </div>
+  </div>`;
+
+  // Only show IN-PROGRESS books (started but not done)
+  const inProgressNT=BIBLE.NT.filter(b=>{const k='NT:'+b.name;const p=prog[k];return p&&p.readChapters.size>0&&p.readChapters.size<b.chapters;});
+  const inProgressOT=BIBLE.OT.filter(b=>{const k='OT:'+b.name;const p=prog[k];return p&&p.readChapters.size>0&&p.readChapters.size<b.chapters;});
+
+  const inProgressHTML=(books,testament)=>{
+    if(!books.length)return'';
+    return books.map(b=>{
+      const k=testament+':'+b.name;const p=prog[k];
+      const read=p?p.readChapters.size:0;
+      const pct=Math.min(100,Math.round(read/b.chapters*100));
+      return `<div class="book-card" onclick="openBookDetail('${b.name}','${testament}')">
+        <div class="book-card-header">
+          <span class="book-name-label">${b.name}</span>
+          <span class="book-badge ${testament}">${testament}</span>
+        </div>
+        <div class="book-progress-row">
+          <div class="progress-bar-wrap"><div class="progress-bar-fill ${testament}" style="width:${pct}%"></div></div>
+          <span class="progress-text">${read}/${b.chapters}章</span>
+        </div>
+      </div>`;
+    }).join('');
+  };
 
   const el=document.getElementById('tab-reading');
   el.innerHTML=`
@@ -886,60 +831,77 @@ function renderReading(){
       <div class="init-title">快速建立完成記錄</div>
       <div class="init-desc">如果你已經讀完整卷，可以直接登記完成，不用一章一章輸入。</div>
       <div class="init-row">
-        <div class="init-card" onclick="openQuickComplete('NT')">
-          <div class="init-card-icon">📘</div>
-          <div class="init-card-label">登記新約<br>全卷完成</div>
-        </div>
-        <div class="init-card" onclick="openQuickComplete('OT')">
-          <div class="init-card-icon">📜</div>
-          <div class="init-card-label">登記舊約<br>全卷完成</div>
-        </div>
+        <div class="init-card" onclick="openQuickComplete('NT')"><div class="init-card-icon">📘</div><div class="init-card-label">登記新約<br>全卷完成</div></div>
+        <div class="init-card" onclick="openQuickComplete('OT')"><div class="init-card-icon">📜</div><div class="init-card-label">登記舊約<br>全卷完成</div></div>
       </div>
     </div>
 
-    <button class="save-btn" style="margin-bottom:14px;" onclick="document.getElementById('reading-modal').classList.add('open')">
-      📖 新增讀經記錄
-    </button>
+    <button class="save-btn" style="margin-bottom:14px;" onclick="document.getElementById('reading-modal').classList.add('open')">📖 新增讀經記錄</button>
 
-    ${renderBookCards(prog,'NT')}
-    ${renderBookCards(prog,'OT')}
+    ${inProgressNT.length||inProgressOT.length?`
+      <div class="book-section-title">進行中的書卷（點書名查看筆記）</div>
+      ${inProgressHTML(inProgressNT,'NT')}
+      ${inProgressHTML(inProgressOT,'OT')}
+    `:'<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:12px 0 4px;">目前沒有進行中的書卷</div>'}
 
-    <div class="book-section-title">讀經記錄</div>
-    ${readings.length?readings.slice(0,30).map(r=>`
-      <div class="reading-log-item">
-        <div class="reading-log-header"><span class="reading-log-book">${r.book||''}</span><span class="reading-log-date">${r.date||''}</span></div>
-        <div class="reading-log-ch">第 ${r.fromCh||r.from} — ${r.toCh||r.to} 章</div>
-        ${r.note?`<div class="reading-log-note">${esc(r.note)}</div>`:''}
-      </div>`).join('')
-    :`<div class="empty"><div class="empty-text">還沒有讀經記錄</div></div>`}
+    <div class="book-section-title" style="margin-top:16px;">讀經記錄</div>
+    ${readSearch}
+    <div id="reading-log-list">
+      ${readings.length?readings.slice(0,50).map(readingLogHTML).join(''):'<div class="empty"><div class="empty-text">還沒有讀經記錄</div></div>'}
+    </div>
   `;
 }
 
-function renderBookCards(prog,testament){
-  const books=BIBLE[testament];
-  const label=testament==='NT'?'新約':'舊約';
-  return `<div class="book-section-title">${label}</div>`+books.map(b=>{
-    const k=testament+':'+b.name;
-    const p=prog[k];
-    const read=p?p.readChapters.size:0;
-    const done=read>=b.chapters;
-    const pct=Math.min(100,Math.round(read/b.chapters*100));
-    return `<div class="book-card${done?' complete':''}">
-      <div class="book-card-header">
-        <span class="book-name-label">${b.name}</span>
-        <span class="book-badge ${done?'done':testament}">${done?'✓ 完成':testament}</span>
-      </div>
-      <div class="book-progress-row">
-        <div class="progress-bar-wrap"><div class="progress-bar-fill ${done?'done':testament}" style="width:${pct}%"></div></div>
-        <span class="progress-text">${read}/${b.chapters}章</span>
-      </div>
-    </div>`;
-  }).join('');
+function readingLogHTML(r){
+  return `<div class="reading-log-item" data-book="${r.book||''}" data-note="${esc(r.note||'')}">
+    <div class="reading-log-header"><span class="reading-log-book">${r.book||''}</span><span class="reading-log-date">${r.date||''}</span></div>
+    <div class="reading-log-ch">第 ${r.fromCh||r.from} — ${r.toCh||r.to} 章</div>
+    ${r.note?`<div class="reading-log-note">${esc(r.note)}</div>`:''}
+  </div>`;
 }
 
+window.filterReadingLog=function(){
+  const q=(document.getElementById('reading-search')?.value||'').toLowerCase();
+  const items=document.querySelectorAll('#reading-log-list .reading-log-item');
+  items.forEach(el=>{
+    const book=el.dataset.book.toLowerCase();
+    const note=el.dataset.note.toLowerCase();
+    el.style.display=(!q||book.includes(q)||note.includes(q))?'':'none';
+  });
+};
+
+// Book detail modal
+window.openBookDetail=function(bookName,testament){
+  const bookReadings=readings.filter(r=>r.book===bookName).sort((a,b)=>a.date>b.date?1:-1);
+  const b=BIBLE[testament].find(x=>x.name===bookName);
+  const prog=getBookProgress();
+  const k=testament+':'+bookName;
+  const p=prog[k];
+  const read=p?p.readChapters.size:0;
+  const pct=b?Math.min(100,Math.round(read/b.chapters*100)):0;
+
+  document.getElementById('book-detail-title').textContent=`📖 ${bookName}`;
+  document.getElementById('book-detail-content').innerHTML=`
+    <div style="margin-bottom:14px;">
+      <div class="book-progress-row" style="margin-bottom:4px;">
+        <div class="progress-bar-wrap"><div class="progress-bar-fill ${testament}" style="width:${pct}%"></div></div>
+        <span class="progress-text">${read}/${b?b.chapters:0}章 (${pct}%)</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:10px;font-weight:500;">共 ${bookReadings.length} 筆讀經記錄</div>
+    ${bookReadings.map(r=>`
+      <div class="book-detail-item">
+        <div class="book-detail-ch">第 ${r.fromCh||r.from} — ${r.toCh||r.to} 章</div>
+        <div class="book-detail-date">${r.date||''}</div>
+        ${r.note&&r.note!==`登記新約全卷完成`&&r.note!==`登記舊約全卷完成`?`<div class="book-detail-note">${esc(r.note)}</div>`:''}
+      </div>`).join('')}
+    ${bookReadings.length===0?'<div class="empty"><div class="empty-text">還沒有讀經記錄</div></div>':''}
+  `;
+  document.getElementById('book-detail-modal').classList.add('open');
+};
+
 window.saveReading=async function(){
-  const btn=document.getElementById('read-save-btn');
-  btn.disabled=true;btn.textContent='儲存中…';
+  const btn=document.getElementById('read-save-btn');btn.disabled=true;btn.textContent='儲存中…';
   const book=document.getElementById('r-book').value;
   const fromCh=parseInt(document.getElementById('r-from').value);
   const toCh=parseInt(document.getElementById('r-to').value)||fromCh;
@@ -949,12 +911,23 @@ window.saveReading=async function(){
     const ref=await addDoc(collection(db,'readings'),r);r.id=ref.id;readings.unshift(r);
     closeModal('reading-modal');
     document.getElementById('r-from').value='';document.getElementById('r-to').value='';document.getElementById('r-note').value='';
-    renderReading();showToast('📖 讀經記錄已儲存');
+
+    // Check if this book is now complete → show celebration
+    const prog=getBookProgress();
+    const bData=BIBLE[currentTestament].find(x=>x.name===book);
+    const k=currentTestament+':'+book;
+    if(bData&&prog[k]&&prog[k].readChapters.size>=bData.chapters){
+      document.getElementById('cel-title').textContent=`🎉 ${book}讀完了！`;
+      document.getElementById('cel-text').textContent=`May，你完成了${book}！\n神的話語正在你心裡生根！`;
+      document.getElementById('celebration').classList.add('show');
+    } else {
+      showToast('📖 讀經記錄已儲存');
+    }
+    renderReading();
   }catch(e){showToast('儲存失敗');}
   btn.disabled=false;btn.textContent='✦ 儲存讀經記錄';
 };
 
-// QUICK COMPLETE
 window.openQuickComplete=function(t){
   quickTarget=t;
   const label=t==='NT'?'新約 27 卷':'舊約 39 卷';
@@ -964,9 +937,7 @@ window.openQuickComplete=function(t){
 };
 window.doQuickComplete=async function(){
   if(!quickTarget)return;
-  const books=BIBLE[quickTarget];
-  const date=document.getElementById('quick-date').value;
-  const label=quickTarget==='NT'?'新約':'舊約';
+  const books=BIBLE[quickTarget];const date=document.getElementById('quick-date').value;const label=quickTarget==='NT'?'新約':'舊約';
   closeModal('quick-modal');showToast('登記中，請稍候…');
   try{
     for(const b of books){
@@ -984,8 +955,6 @@ window.closeCelebration=function(){document.getElementById('celebration').classL
 // UTILS
 window.showToast=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);};
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-init();
 </script>
 </body>
 </html>
